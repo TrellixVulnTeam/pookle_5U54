@@ -1,0 +1,4 @@
+mongoclient
+
+update upsert »ç¿ë
+https://stackoverflow.com/questions/5055797/pymongo-upsert-throws-upsert-must-be-an-instance-of-bool-error
