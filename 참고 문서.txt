@@ -2,3 +2,8 @@ mongoclient
 
 update upsert 사용
 https://stackoverflow.com/questions/5055797/pymongo-upsert-throws-upsert-must-be-an-instance-of-bool-error
+
+fa awesome
+아이콘 사용의 문제점
+fas 클래스로 채워진 아이콘을 사용할 경우 <i>태그 자체로 남아있지않고 <path>태그로 변경되어 타겟팅이 불가능해짐.
+다행히 특수문자로 변형할 수 있는 별 문자여서 아이콘 대신 특수문자를 사용함으로 해결.
