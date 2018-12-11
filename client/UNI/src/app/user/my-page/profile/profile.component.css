@@ -1,0 +1,36 @@
+.container{
+    font-family: 'Jua', sans-serif;
+    width:90%;
+    height:350px;
+    padding:20px;
+    margin:50px 10px 0px 40px;
+    background-color:white;
+    border:1px solid #BBBBBB;
+    border-radius: 5px;
+}
+.profile_head{
+    font-size:30px;
+    text-align:center;
+}
+.profile_body{
+    margin-top:60px;
+    text-align:center;
+    height:130px;
+    font-size:22px;
+}
+.big-font{
+    font-size:35px;
+}
+.profile_footer{
+    text-align:center;
+}
+.change_btn{
+    margin:10px 20px;
+    padding:10px;
+    background-color:#212529;
+    color:#fed136;
+    border:0px;
+    border-radius: 5px;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size:20px;
+}

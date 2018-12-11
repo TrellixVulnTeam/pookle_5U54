@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Agency - Start Bootstrap Theme</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+
+
+    <!-- Header -->
+    <header *ngIf="!is_auth" class="masthead">
+      <div class="container">
+        <div class="row">
+          <div class="intro-text col-lg-6">
+            <div class="intro-heading">Hello, PooKle!</div>
+            <div class="introduce-myself text-uppercase">어서오세요!<br> 부경대학교 정보포털서비스 POOKLE입니다!</div>
+            <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" routerLink="/timeline">Pookle 시작하기</a>
+          </div>
+          <div class="intro-text col-lg-6">
+              <start-sign-up></start-sign-up>
+          </div>
+        </div>
+      </div>
+    </header>
+    <header *ngIf="is_auth" class="masthead">
+        <div class="container">
+            <div class="row">
+              <div class="intro-text col-lg-12">
+                <div class="intro-heading">Hello, PooKle!</div>
+                <div class="introduce-myself text-uppercase">어서오세요!<br> 부경대학교 정보포털서비스 POOKLE입니다!</div>
+                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" routerLink="/timeline">Pookle 시작하기</a>
+              </div>
+            </div>
+          </div>
+    </header>
+
+    <!-- Services -->
+    <section id="services">
+      <div class="container">
+        <div class="row services-header">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Pookle</h2>
+            <h3 class="text-muted font-small">푸클은 부경대학교 내의 정보를 손쉽고 빠르게 가져다 줍니다.<br> 학교와 관련된 모든 정보를 수집하여 모아둠으로써 사용자는 원하는 정보에 편하게 접근할 수 있습니다.</h3>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-md-6">
+            <span class="fas-span">
+              <i class="fas fa-book"></i>
+            </span>
+            <h4 class="service-heading">TIMELINE</h4>
+            <p class="text-muted">부경대학교와 관련한 모든 웹사이트의 정보를 수집하여 사용자의 관심에 맞게 적절한 정보를 제공합니다.</p>
+          </div>
+          <div class="col-md-6">
+            <span class="fas-span">
+              <i class="fas fa-edit"></i>
+            </span>
+            <h4 class="service-heading">BOARD</h4>
+            <p class="text-muted">사용자들이 자유롭게 본인의 의견을 이야기할 수 있는 커뮤니티 공간입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="bg-light" id="team">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">개발자 소개</h2>
+            <h3 class="text-muted font-small">저희가 만들었어요!</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="assets/img/imiml.png" alt="">
+              <h4>신희재</h4>
+              <p class="text-muted">기획자<br>세종대학교 컴퓨터공학과</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="assets/img/imiml.png" alt="">
+              <h4>조영재</h4>
+              <p class="text-muted">개발자<br>부경대학교 컴퓨터공학과</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <p class="large text-muted">
+              두명의 대학생이 모여 진행한 웹 프로젝트입니다.<br>
+              많이 모자란 작품이지만 자주 사용해주시면 좋겠어요!<br>
+              아래 버튼을 누르시면 저희 깃허브에서 공개된 소스를 확인하실 수 있습니다.
+            </p>
+            <a class="btn btn-secondary" target="_blank" href="http://www.github.com">Github 소스 보러 가기</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Contact Us</h2>
+            <h3 class="section-subheading">저희에게 궁금한 점이 있으시다면...</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 text-center white-bold">
+              Email<br>
+              <a href="mailto:shin10256@gmail.com">shin10256@gmail.com</a><br>
+              <a href="mailto:wo78644@gmail.com">wo78644@gmail.com</a><br><br>
+              Blog<br>
+              <a target="_blank" href="https://shino1025.blog.me">https://shino1025.blog.me</a><br>
+              <a target="_blank" href="http://wo7864.tistory.com/">http://wo7864.tistory.com/</a><br>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <span class="copyright"> IML Project 2018</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+
+</html>

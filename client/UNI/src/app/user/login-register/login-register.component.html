@@ -1,0 +1,127 @@
+
+<div class="container top-margin">
+
+  <ngb-tabset>
+    <ngb-tab >
+      <ng-template class="tab-title" ngbTabTitle><b>로그인</b></ng-template>
+      <ng-template ngbTabContent>
+        <div class="row">
+          <div class="col-sm sign-in">
+            <form  [formGroup]="signInForm" (ngSubmit)="signIn()">
+              <div class="form-group">
+                <span>계정 : </span> 
+                <input type="text" width="80px" class="form-control" formControlName="user_id">
+                </div>
+                <div class="form-group">
+                  <span>비밀 번호 : </span> 
+                  <input type="password" width="80px" class="form-control" formControlName="user_pw">
+                </div>
+                <button type="submit" class="btn btn-secondary">로그인</button><br>  
+                <a class="text-muted small" (click)="open(content)">계정이나 비밀번호를 잊으셨나요?</a>        
+              </form>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+      <ng-template class="tab-title" ngbTabTitle><b>회원가입</b></ng-template>
+      <ng-template ngbTabContent>
+        <div class="col-sm sign-up">
+            <form  [formGroup]="signUpForm" (ngSubmit)="registerNewUser()">
+              <div class="form-group">
+                <span>계정 : </span> 
+                <input type="text" width="80px" class="form-control" formControlName="user_id">
+              </div>
+              <div class="form-group">
+                <span>비밀 번호 : </span> 
+                <input type="password" width="80px" class="form-control" formControlName="user_pw">
+              </div>
+              <div class="form-group">
+                  <span>비밀 번호 확인 : </span> 
+                  <input type="password" width="80px" class="form-control" formControlName="user_pwc">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="signupPasswordagain">Password question</label><br>            
+                <select class="question" name="question" formControlName="user_que">
+                    <option value="">질문을 선택해주세요</option>
+                    <option value="나의 학과는?">나의 학과는?</option>
+                    <option value="나의 어머니 성함은?">나의 어머니 성함은?</option>
+                    <option value="나의 고향은?">나의 고향은?</option>
+                </select>
+                <input id="signupPassworquestion" type="text" maxlength="25" class="form-control" formControlName="user_ans">
+                </div>
+              <button type="submit" class="btn btn-secondary">가입</button>          
+            </form>
+          </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+ 
+
+      </div>
+      
+      
+
+
+      <ng-template #content let-modal>
+
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">암호를 까먹었나요?</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <find-account [activePane]="display_grade ? display_grade2 ? display_grade3 ? 'left' : 'center' : 'right' : 'finish'">
+                <div class="modal-body" leftPane>
+                  <form [formGroup]="checkAccountForm" (ngSubmit)="checkAccount()">
+                    <div class="form-group">
+                      <label>계정을 입력해주세요.</label>
+                      <div class="input-group">
+                        <input formControlName="account" class="form-control">
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-dark" (click)="move()">확인</button>
+
+                  </form>
+                </div>
+                <div class="modal-body" centerPane>
+                    <form [formGroup]="checkQuestionForm" (ngSubmit)="checkQuestion()">
+                      <div class="form-group">
+                        <label>나의 어머니 성함은?</label>
+                        <div class="input-group">
+                          <input formControlName="answer" class="form-control">
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-outline-dark" (click)="move()">확인</button>
+                    </form>
+                  </div>
+                  <div class="modal-body" rightPane>
+                      <form [formGroup]="resetPasswdForm" (ngSubmit)="resetPasswd()">
+                        <div class="form-group">
+                          <label>새로운 비밀번호를 입력하세요.</label>
+                          <div class="input-group">
+                            <input formControlName="pw" type="password" class="form-control">
+                          </div>
+                          <br>
+                          <label>다시 한 번 더!!</label>
+                          <div class="input-group">
+                            <input formControlName="pwc" type="password" class="form-control">
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-dark" (click)="move()">확인</button>
+                      </form>
+                    </div>
+                    <div class="modal-body" finishPane>
+                      <h3 style="font-weight:bold;">비밀번호가 변경되었습니다!</h3>
+                    </div>
+            </find-account>
+
+            <div class="modal-footer">
+            </div>
+
+
+        </ng-template>
+
+        
+
+        

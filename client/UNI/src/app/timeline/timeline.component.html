@@ -1,0 +1,97 @@
+<div class="container-fluid" id="timeline-container">
+    <div class="row">
+            <div class="loading" *ngIf="!posts">
+                    <br><br>
+                Loading....<br>
+                잠시만 기다려주세요.
+            </div>
+    </div>
+
+    <div class="row">
+            <div class="col-xl-2 col-0">
+                    <nav class="navbar navbar-expand-xl navbar-light">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                              <span>Menu</span>
+                            </button>
+                       
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                              <ul class="nav flex-column mr-auto mt-2 mt-lg-0">
+                                <li *ngIf="isAdmin" class="nav-item">
+                                    <button (click)="write(content)"class="nav-link "><i class="fas fa-pencil-alt"></i> 글 작성 하기</button> 
+                                </li>
+                                <li class="nav-item">
+                                <button class="nav-link active" (click)="getList(0)">전체 보기</button>
+                                </li>
+                                <li class="nav-item">
+                                <button class="nav-link " (click)="getList(1)">진로</button>
+                                </li>
+                                <li class="nav-item">
+                                <button class="nav-link" (click)="getList(2)">스터디&모임</button>
+                                </li>
+                                <li class="nav-item">
+                                <button class="nav-link" (click)="getList(3)">알바&구인</button>
+                                </li>
+                                <li class="nav-item">
+                                <button class="nav-link" (click)="getList(4)">행사&대외활동</button>
+                                </li>
+                              </ul>
+                            </div>
+                          </nav>
+        </div>
+    
+  
+    <div class="main container col-xl-8">
+    <div *ngFor="let post of posts; index as i" class="post">
+        <a href="{{post.url}}" class="link-btn">
+            <div class="block">
+                <a href="#" class="title">{{post.title}}</a>
+            </div>
+
+            <span class="time">{{post.date}}</span>
+            <p class="content">{{post.post}}</p>
+        </a>
+        <a id="{{i}}" (click)="favorite(i)" class="like-btn-div">
+            <span *ngIf="!isFavorite[i]" class="like-btn">☆</span>
+            <span *ngIf="isFavorite[i]" class="like-btn">★</span>
+            <span class="like-num">{{post.fav_cnt}}</span></a>
+        <a (click)="copyMessage(post.url)" placement="top"
+                ngbPopover="복사되었습니다." popoverTitle="알림" class="url-copy-btn" ><i class="far fa-copy url-copy-btn"></i></a>
+        <div *ngFor="let tag of post.tag; index as k" class="popover_div">
+            <button *ngIf="!is_auth" placement="top" ngbPopover="로그인 후 이용해주세요" popoverTitle="알림" (click)="addFavTag(i, k)" class="tag">{{tag}}</button>
+            <button *ngIf="is_auth" placement="top" ngbPopover="관심태그에 추가되었습니다." popoverTitle="알림" (click)="addFavTag(i, k)" class="tag">{{tag}}</button>
+        </div>
+        <button class="remove-btn float-right" *ngIf="isAdmin" (click)="removePost(i)">제거</button>
+    </div>
+</div>
+<div class="col-xl-2 col-0">
+        <div class="navbar navbar-expand-xl">
+                <div class="collapse navbar-collapse right-banner">
+                        <span class="pookle-font">PooKle</span>
+                    </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+
+
+<ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">글쓰기</h4>
+          <button type="button" class="close" aria-label="Close" (click)="close()">
+              <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form [formGroup]="writeForm" (ngSubmit)="send()">
+        <div class="modal-body">
+            <div class="title-div">제목 <input id="title" fromControlName="title" class="title-area"></div>
+            <div class="title-div">링크 <input id="url" fromControlName="url" class="title-area"></div>
+            <textarea id="contents" formControlName="contents" class="write-area" placeholder="내용을 입력해주세요"></textarea>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-dark">올리기</button>
+        </div>
+      </form>
+      </ng-template>

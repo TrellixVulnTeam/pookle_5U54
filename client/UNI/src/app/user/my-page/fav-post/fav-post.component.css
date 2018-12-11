@@ -1,0 +1,20 @@
+.container{
+    font-family: 'Jua', sans-serif;
+}
+.red{
+    color:red;
+}
+.fav-box{
+    width:60%;
+    margin:0 auto;
+    padding:30px;
+    border:1px solid #AAAAAA;
+    border-bottom:0px;
+}
+.more-btn{
+    display: block;
+    width:60%;
+    margin:0 auto;
+    border:1px solid #AAAAAA;
+    background:white;
+}

@@ -1,0 +1,42 @@
+
+<div class="container top-margin">
+  <div class="row">
+    <div class="col-sm sign-in">
+      <h1>로그인</h1>
+      <form  [formGroup]="signInForm" (ngSubmit)="signIn()">
+        <div class="form-group">
+          <span>계정 : </span> 
+          <input type="text" width="80px" class="form-control" formControlName="id">
+          </div>
+          <div class="form-group">
+            <span>비밀 번호 : </span> 
+            <input type="text" width="80px" class="form-control" formControlName="pw">
+          </div>
+          <button type="submit" class="btn btn-secondary">로그인</button>          
+        </form>
+    </div>
+    <div class="col-sm sign-up">
+      <h1>회원가입</h1>
+      <form  [formGroup]="signInForm" (ngSubmit)="signIn()">
+        <div class="form-group">
+          <span>계정 : </span> 
+          <input type="text" width="80px" class="form-control" formControlName="id">
+        </div>
+        <div class="form-group">
+          <span>비밀 번호 : </span> 
+          <input type="text" width="80px" class="form-control" formControlName="pw">
+        </div>
+        <div class="form-group">
+            <span>비밀 번호 확인 : </span> 
+            <input type="text" width="80px" class="form-control" formControlName="pw">
+        </div>
+        <div class="form-group">
+            <span>비밀 번호 문답 : </span> 
+            <input type="text" width="80px" class="form-control" formControlName="pw">
+        </div>
+        <button type="submit" class="btn btn-secondary">가입</button>          
+      </form>
+    </div>
+  </div>
+</div>
+

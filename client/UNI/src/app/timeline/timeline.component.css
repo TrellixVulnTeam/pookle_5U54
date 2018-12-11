@@ -1,0 +1,223 @@
+#timeline-container{
+    margin-top:160px;
+    padding-top:5px;
+    border-radius:10px;
+    background-color:#313539;
+}
+.loading{
+    
+    font-size:45px;
+    font-weight:bold;
+    font-family: 'Kaushan Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    
+    z-index: 10;
+    background-color:#313539;
+    width:100%;
+    height:1000px;
+    padding-top:100px;
+    text-align:center;
+    color:#fed136;
+    
+}
+.nav{
+    position: fixed;
+    left:0px;
+    top:80px;
+    margin-left:-20px;
+    padding-top:100px;
+    padding-left:10px;
+    display: block;
+    width:40%;
+    height:1000px;
+    background-color:#313539;
+    border-radius:15px;
+}
+.nav-link:hover{
+    background-color:#000000;
+}
+.nav-link{
+    display: block;
+    border:0px;
+    font-family: 'Do Hyeon', sans-serif;
+    background-color:#313539;
+    width:40%;
+
+    color:#fed136;
+    font-size:23px;
+
+}
+.main{
+    background-color:white;
+    border-radius:10px;
+}
+.right-banner{
+    writing-mode:tb-rl;
+}
+.pookle-font{
+
+    font-family: 'Righteous', cursive;
+    font-size:130px;
+    color:#888888;
+}
+
+@media (max-width: 576px) {
+    .container {
+      width: 350px;
+    }
+}
+  @media (min-width: 992px) {
+    .container {
+      width: 600px;
+    }
+}
+  
+  @media (min-width: 1200px) {
+    .container {
+      width: 1000px;
+    }
+}
+
+@media (max-width: 576px) { 
+    #timeline-container{
+        margin-top:100px;
+    }
+}
+.post{
+    border-bottom:2px #BBBBBB solid;
+    padding-bottom : 20px;
+    margin-bottom:10px;
+    color:black;
+}
+.link-btn{
+    display:block;
+    height:100%;
+    width:100%;
+    position: relative;;
+    top:0;
+    left:0;
+    text-decoration: none;
+}
+
+.link-btn:hover{
+    background-color:#DDDDDD;
+    -webkit-transition: background-color 500ms linear;
+    -ms-transition: background-color 500ms linear;
+    transition: background-color 500ms linear;
+}
+
+.block{
+    display: block;
+}
+.align-right{
+    display: inline-block;
+    text-align:right;
+    position: relative;
+    left:70%;
+}
+.title{
+    display: block;
+    width: 100%; 
+    color:black;
+    font-size:20px;
+    font-weight: bold;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow: ellipsis;
+}
+.time{
+    font-size:12px;
+    color:gray;
+}
+.link{
+    color:green;
+}
+.like{
+    color:black;
+}
+.like-btn-div{
+    margin-right:50px;
+
+}
+.url-copy-btn, .like-num{
+    color:black;
+    font-size:20px;
+    margin-right:10px;
+}
+.like-btn{
+    color:#fed136;
+    font-size:25px;
+    font-weight: bold;
+    margin-right:10px;
+}
+
+.url-copy-btn:hover, .like-btn:hover{
+    color:rgb(35, 132, 170);
+}
+.write-div{
+    height:80px;
+    text-align:right;
+}
+.write-btn{
+    height:60px;
+    margin:0 auto;
+    padding:15px;
+    border:0px;
+    background-color:#212529;
+    color:#fed136;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size:20px;
+    border-radius:5px;
+}
+.content{
+    display: inline-block; 
+    width: 100%; 
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: normal; 
+    line-height: 1.2; 
+    height: 2.4em; 
+    text-align: left; 
+    word-wrap: break-word; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+    color:black;
+}
+
+.tag{
+    padding:5px;
+    margin-right:5px;
+    margin-bottom: 6px;
+    border:0px;
+    border-radius: 5px;
+    background-color:#DDDDDD;
+    font-family: 'Jua', sans-serif;
+    font-size:12px;
+}
+.popover_div{
+    display: inline;
+}
+.remove-btn{
+
+    height:30px;
+    margin:0 auto;
+    border:0px;
+    background-color:#212529;
+    color:#fed136;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size:20px;
+    border-radius:5px;
+}
+
+.write-area{
+    width:100%;
+    height:200px;
+}
+.title-area{
+    width:90%;
+}
+.title-div{
+    padding-bottom:5px;
+}

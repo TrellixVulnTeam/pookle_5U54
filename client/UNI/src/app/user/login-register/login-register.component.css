@@ -1,0 +1,27 @@
+.container{
+  width:50%;
+  background-color:white;
+  height:700px;
+}
+.top-margin{
+  margin-top:150px;
+  padding-top:40px;
+}
+.sign-in, .sign-up{
+  padding:10px;
+  margin:5px;
+  border-radius:5px;
+
+}
+
+.question {
+  margin-bottom:10px;
+  width:100%;
+  height:30px;
+}
+.tab-title{
+  font-weight:bold;
+  font-size:21px;
+}
+
+

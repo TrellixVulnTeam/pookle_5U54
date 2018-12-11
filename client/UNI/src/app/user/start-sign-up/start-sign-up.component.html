@@ -1,0 +1,78 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>eiei</title>
+        <!--<meta charset="UTF-8">-->
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+        <!--<link href="css/regist.css" rel="stylesheet" type="text/css"/>-->
+        <!--<link href='css/bootstrap.min.css' rel="stylesheet">-->
+        <!--<meta charset="UTF-8">-->
+        <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
+        <!--<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>-->
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />-->
+
+        <!--<link href="css/regist.css" rel="stylesheet" type="text/css"/>-->
+        <!--<link href='css/bootstrap.min.css' rel="stylesheet">-->
+        <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Nanum+Pen+Script" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <form [formGroup]="signUpForm" (ngSubmit)="registerNewUser()">
+                            <div class="form-group">
+                                <h2>계정 생성</h2>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="signupName">계정</label>
+                                <input id="signupName" type="text" maxlength="50" class="form-control" formControlName="user_id">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="signupPassword">암호</label>
+                                <input id="signupPassword" type="password" maxlength="25" class="form-control" placeholder="" length="40" formControlName="user_pw">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="signupPasswordagain">암호 재확인</label>
+                                <input id="signupPasswordagain" type="password" maxlength="25" class="form-control" formControlName="user_pwc">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="signupPasswordagain">본인 확인 질문</label><br>            
+                                <select class="question" name="question" formControlName="user_que">
+                                    <option value="">질문을 선택해주세요</option>
+                                    <option value="나의 학과는?">나의 학과는?</option>
+                                    <option value="나의 어머니 성함은?">나의 어머니 성함은?</option>
+                                    <option value="나의 고향은?">나의 고향은?</option>
+                                    <option value="나의 출신 고등학교는?">나의 출신 고등학교는?</option>
+                                    <option value="나의 아버지 성함은?">나의 아버지 성함은?</option>
+                                    <option value="나의 취미는?">나의 취미는?</option>
+                                    <option value="나의 라임 오렌지나무">나의 라임 오렌지나무</option>
+
+                                </select>
+                                <input id="signupPassworquestion" type="text" maxlength="25" class="form-control" formControlName="user_ans">
+                            </div>
+                            <div class="form-group">
+                                <button id="signupSubmit" type="submit" class="btn btn-info btn-block">계정 생성 하기</button>
+                            </div>
+                            <p class="form-group font-small">생성된 계정은 2개월 간 접속하지 않을 경우 계정이 삭제됩니다.</p>
+                            <hr>
+                            <p>이미 계정이 있으신가요? <a href="#">로그인</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

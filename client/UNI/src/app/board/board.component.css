@@ -1,0 +1,142 @@
+#board-container{
+    margin-top:160px;
+    padding-top:20px;
+    border-radius:10px;
+}
+@media (max-width: 576px) {
+    .container {
+      width: 400px;
+    }
+    #board-container{
+        margin-top:100px;
+    }
+}
+  @media (min-width: 992px) {
+    .container {
+      width: 600px;
+    }
+}
+  
+  @media (min-width: 1200px) {
+    .container {
+      width: 1000px;
+    }
+}
+
+@media (max-width: 576px) { 
+
+}
+
+.nickname{
+    display: inline-block;
+}
+.write-div{
+    height:80px;
+    text-align:right;
+}
+.write-btn{
+    height:60px;
+    margin:0 auto;
+    padding:15px;
+    border:0px;
+    background-color:#212529;
+    color:#fed136;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size:20px;
+    border-radius:5px;
+}
+.post{
+    min-height:150px;
+    max-height:800px;
+    padding:15px 15px 5px;
+    margin-bottom: 10px;
+
+    border:1px solid #CCCCCC;
+    border-radius:5px;
+    background-color: white;
+
+}
+
+.post .time{
+    color:darkgray;
+    font-size:10px;
+
+}
+
+.post .post-contents{
+    display: inline-block; 
+    width: 100%; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: normal; 
+    line-height: 1.2; 
+    max-height: 6.0rem; 
+    text-align: left; 
+    word-wrap: break-word; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+}
+.like-div{
+    display: inline-block;
+    padding:5px;
+}
+.like-btn, .toggle-comment{
+    font-size:20px;
+    margin-right:50px;
+    display: inline-block;
+    width:80px;
+    height:35px;
+    text-align:center;
+    line-height: 30px;
+}
+.like-btn>.like-num, .toggle-comment>span{
+    color:#212529a9;
+}
+.heart{
+    color:palevioletred;
+    font-weight: bold;
+    font-size:23px;
+    font-family: 'Do Hyeon', sans-serif;
+}
+.toggle-comment:hover, .like-btn:hover{
+    background-color:#DDDDDD;
+}
+.align-center{
+    text-align:center;
+}
+.comment-div{
+    border-top:solid rgb(210, 210, 210) 0.5px;
+    padding-top:5px;
+    padding-bottom: 5px;
+    margin-top:10px;
+}
+
+.comment-list{
+    margin-top:10px;
+}
+
+.comment{
+    margin-bottom:5px;
+    padding:3px 8px;
+    border:0;
+    border-radius: 5px;
+    background-color: rgb(240, 240, 240);
+}
+
+.delete{
+    display: inline-block;
+    background-color:transparent;
+    border:0px;
+    color:red;
+    font-weight:bold;
+    font-size:20px;
+}
+.name{
+    font-size:15px;
+    font-weight: bold;
+}
+.write-area{
+    width:100%;
+    height:200px;
+}

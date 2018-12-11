@@ -1,0 +1,55 @@
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Nanum+Pen+Script" rel="stylesheet">
+
+<div class="container" id="board-container">
+    <div class="write-div">
+        <button (click)="write(content)" class="write-btn"><i class="fas fa-pencil-alt"></i> 글 쓰러 가기</button> 
+    </div>
+
+    <div *ngFor="let post of posts; index as i" class="post">
+        <h3 class="nickname">{{post.author}}</h3>
+        <span class="time">&nbsp;{{post.date}}</span>
+        <div class="post-contents">{{post.contents}}</div>
+        <div class="comment-div">
+            <a class="like-btn" (click)="favorite(i)">
+                <span *ngIf="!isFavorite[i]" class="heart" style="margin-right:20px;">♡</span>
+                <span *ngIf="isFavorite[i]" class="heart" style="margin-right:20px;">♥</span>
+                <span class="like-num">{{post.fav_cnt}}</span>
+            </a>
+            <a class="toggle-comment" (click)="collapsed(i)" [attr.aria-expanded]="isCollapsed[i]" aria-controls="collapseExample">
+                <span  class="fa-comment" [class.far]="isCollapsed[i]" [class.fas]="!isCollapsed[i]" style="margin-right:20px;"></span>
+                <span class="comment-num">{{post.comment.length}}</span>
+            </a>
+            <div class="comment-list" [ngbCollapse]="isCollapsed[i]">
+                <div *ngFor="let comment of post.comment; index as j" class="comment">
+                    <span class="name">{{comment.author}}</span>
+                    &nbsp;{{comment.contents}}
+                    <span class="text-muted">{{comment.date}}</span>
+                    <button class="delete float-right" (click)="delete_comment(i,j)">X</button>
+                </div>
+                <form [formGroup]="comment_writeForm" (ngSubmit)="comment_send(i)">
+                    <input class="comment-textarea" formControlName="contents" type="textarea" placeholder="댓글을 입력해주세요." style="width:430px; margin:3px 0px">
+                    <button type="submit"> <span class="fas fa-comment"></span></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">글쓰기</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="writeForm" (ngSubmit)="send()">
+  <div class="modal-body">
+      <textarea id="contents" formControlName="contents" class="write-area" placeholder="나누고픈 의견을 자유롭게 써주세요."></textarea>
+    
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-dark">올리기</button>
+  </div>
+</form>
+</ng-template>

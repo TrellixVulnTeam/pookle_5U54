@@ -1,0 +1,41 @@
+.container{
+    font-family: 'Jua', sans-serif;
+    width:90%;
+    height:450px;
+    padding:20px;
+    margin:50px 10px 0px 40px;
+    border:1px solid #BBBBBB;
+    border-radius: 5px;
+    background-color:white;
+
+}
+.red{
+    color:red;
+    font-size:22px;
+}
+.fav-box{
+    width:90%;
+    height:300px;
+    margin:0 auto;
+    padding:10px 30px;
+    border:1px solid #AAAAAA;
+    border-bottom:0px;
+    overflow-y: auto;
+
+}
+.row{
+    border-bottom:1px solid #DDDDDD;
+    margin-bottom:10px;
+}
+.more-btn{
+    display: block;
+    width:90%;
+    margin:0 auto;
+    border:1px solid #AAAAAA;
+    background:white;
+}
+.small-font{
+    font-size:15px;
+    color:#999999;
+}
+

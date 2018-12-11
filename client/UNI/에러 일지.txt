@@ -1,0 +1,32 @@
+7/27 
+Angular Form을 사용한 유효성 검증 도중
+Cannot read property 'id' of undefined 에러
+<input type="text" width="80px" class="form-control" id="id" required [(ngModel)]="model.id" #id>
+#id의 변수를 읽지 못하는 듯함.
+
+해결방법 : Angular Reactive Form 사용...
+
+8/3 
+http post를 구현하는 중, http 404 Bad error 발생.
+
+초기 생각한 원인 : 
+전송하는 파일의 형태가 문제였다.
+json형태로 전송이 되어야하는데 메서드 전달과정에서 형이 바뀐듯하다.
+
+원인 : Bad error의 발생이유는 username은 중복이 불가능한 속성이 있는데 중복된 데이터를 넣어서 발생했다.
+
+해결방법 : 중복되지 않는 username 값 삽입.
+
+8/6
+Converting circular structure to JSON 에러.
+ReactiveForm을 그대로 post의 인자로 전달했을 때 발생. 
+JSON.stringify()는 순환참조를 발견하면 TypeError를 발생시킨다.
+
+    this.userData = {
+      username: this.signInForm.value.id,
+      password: this.signInForm.value.pw,
+      email: 'asdf@naver.com'
+    }
+
+다음 구문을 넣어서 this.userData를 인자로 전달함으로 해결.
+

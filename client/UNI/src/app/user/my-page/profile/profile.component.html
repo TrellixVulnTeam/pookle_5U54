@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="profile_head"><span>프로필</span></div>
+  <div class="profile_body">
+    계 정 <span *ngIf="data" class="big-font">{{data.id}}</span><br>
+    별 명 <span *ngIf="data" class="big-font">{{data.nickname}}</span>
+  </div>
+  <div class="profile_footer">
+    <button (click)="editNick(nickname)" class="change_btn">별명 변경</button>
+    <button (click)="changePasswd(password)" class="change_btn">암호 변경</button>
+    <button class="change_btn" (click)="logout()">로그 아웃</button>
+  </div>
+</div>
+
+
+<ng-template #nickname let-nickModal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">별명 바꾸기</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="nicknameForm" (ngSubmit)="edit()">
+  <div class="modal-body">
+      <input id="nickname" formControlName="nickname" placeholder="">
+      <button>중복체크</button>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-dark">변경</button>
+  </div>
+</form>
+</ng-template>
+
+
+<ng-template #password let-passwdModal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">암호 바꾸기</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="passwdChangeForm" (ngSubmit)="change()">
+    <div class="modal-body">
+      <div class="form-group">
+        <label>기존 암호</label>
+        <div class="input-group">
+          <input type="password" id="old_pw" formControlName="old_pw" class="form-control">
+        </div>
+        <label>새 암호</label>
+        <div class="input-group">
+          <input type="password" id="new_pw" formControlName="new_pw" class="form-control">
+        </div>
+        <label>한 번 더!</label>
+        <div class="input-group">
+          <input type="password" id="new_pwc" formControlName="new_pwc" class="form-control">
+        </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-dark">확인</button>
+  </div>
+</form>
+</ng-template>

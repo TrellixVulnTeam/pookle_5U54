@@ -1,0 +1,21 @@
+.menu-info{
+    font-size:150px;
+}
+.menu{
+    border:0px;
+    border-radius: 125px;
+    display: inline-block;
+    background-color:#fed136;
+    color:white;
+    margin:20px;
+    margin-top:10px;
+    width:250px;
+    height:250px;
+    -webkit-transition:width 1s, height 1s, background-color 1s, -webkit-transform 1s;
+    transition:width 1s, height 1s, background-color 1s, transform 1s;
+}
+.small-font{
+    margin-top:-50px;
+    font-size:15px;
+    color:#AAAAAA;
+}

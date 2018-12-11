@@ -1,0 +1,27 @@
+
+.container{
+    margin-top:150px;
+    padding-top:10px;
+    background-color:white;
+    width:60%;
+    height:700px;
+    padding:50px;
+    border:1px solid #BBBBBB;
+    border-radius:10px;
+}
+
+.tag-box{
+    border:1px solid #BBBBBB;
+    border-radius: 5px;
+    padding :10px;
+}
+.tag{
+    padding:10px;
+    margin-right:10px;
+    margin-left:10px;
+    
+    border-radius:15px;
+    background-color:#DDDDDD;
+    font-size:18px;
+    font-weight: bold;
+}

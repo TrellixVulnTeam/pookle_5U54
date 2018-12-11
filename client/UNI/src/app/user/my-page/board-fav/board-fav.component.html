@@ -1,0 +1,18 @@
+<div class="container text-center">
+  <h2>좋아요 표시한 글 - 게시판</h2>
+  <div class="fav-box">
+
+      <div *ngFor="let post of data; index as i;" class="row">
+        <div class="col-10">
+          <strong>{{post.contents}}</strong><br>
+          <span class="small-font">{{post.date}}</span>
+        </div>
+        <div class="col-2">
+            <button (click)="unFav(i)"><i class="far fa-times-circle red"></i></button>
+        </div>
+      </div>
+
+</div>
+<button class="more-btn">더 보기..</button>
+
+</div>

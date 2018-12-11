@@ -1,0 +1,45 @@
+body {
+    border-radius:10px;
+    font-family: 'Nanum Pen Script', cursive;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size:26px;
+}
+
+form { margin: 0px 10px; }
+.panel{
+  padding-top:20px;
+}
+h2 {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.font-small{
+  color:gray;
+  font-size:13px;
+}
+
+.container { 
+  max-width: 360px; 
+}
+
+.divider {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.divider hr {
+  margin: 7px 0px;
+  width: 35%;
+}
+
+.left { float: left; }
+
+.right { float: right; }
+
+.question {
+    margin-bottom:10px;
+    width:100%;
+    height:30px;
+    font-size:20px;
+}

@@ -1,0 +1,7 @@
+<div class="container text-center">
+    <h2>관심있는 태그</h2>
+    <p class="small-font">태그를 누르면 삭제됩니다.</p>
+    <div class="fav-box">
+      <button *ngFor="let tag of data; index as i" (click)="removeTag(i)" class="tag">#{{tag}}</button>
+    </div>
+</div>

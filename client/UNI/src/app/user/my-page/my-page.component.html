@@ -1,0 +1,30 @@
+<!--<div class="container">
+  <div class="menu_bar text-center">
+    <button class="menu" routerLink="change-password" (mouseover)="open(0)" (mouseleave)="close(0)"><span [ngStyle]="{'font-size': btn_arr[0]==true ? '18px' : '30px'}"><i class="fas fa-lock"></i></span><span [ngStyle]="{display: btn_arr[0]==true ? '' : 'none'}"><br>암호<br>변경</span></button>
+    <button class="menu" routerLink="edit-nickname" (mouseover)="open(1)" (mouseleave)="close(1)"><span [ngStyle]="{'font-size': btn_arr[1]==true ? '18px' : '30px'}"><i class="far fa-flushed"></i></span><span [ngStyle]="{display: btn_arr[1]==true ? '' : 'none'}"><br>별명<br>설정</span></button>
+    <button class="menu" routerLink="fav-post" (mouseover)="open(2)" (mouseleave)="close(2)"><span [ngStyle]="{'font-size': btn_arr[2]==true ? '18px' : '30px'}"><i class="fas fa-star"></i></span><span [ngStyle]="{display: btn_arr[2]==true ? '' : 'none'}"><br>관심있는<br>글</span></button>
+    <button class="menu" routerLink="fav-tag" (mouseover)="open(3)" (mouseleave)="close(3)"><span [ngStyle]="{'font-size': btn_arr[3]==true ? '18px' : '30px'}"><i class="fas fa-tags"></i></span><span [ngStyle]="{display: btn_arr[3]==true ? '' : 'none'}"><br>관심있는<br>태그</span></button>
+  </div>
+  <router-outlet></router-outlet>
+</div>-->
+<link href="https://fonts.googleapis.com/css?family=Jua" rel="stylesheet">
+
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <profile (nickname) = "nickname($event)" [data]="profile_data"></profile>
+    </div>
+    <div class="col-6">
+      <fav-tag (refresh) = "refresh($event)" [data]="tag_data"></fav-tag>
+    </div>
+  </div>
+  
+  <div class="row">
+      <div class="col-6">
+        <timeline-fav (refresh) = "refresh($event)" [data]="timeline_data"></timeline-fav>
+      </div>
+      <div class="col-6">
+        <board-fav [data]="board_data"></board-fav>
+      </div>
+    </div>
+</div>
