@@ -128,9 +128,9 @@
     display: inline-block;
     background-color:transparent;
     border:0px;
-    color:red;
-    font-weight:bold;
-    font-size:20px;
+    color:#888888;
+    font-size:15px;
+    line-height:15px;
 }
 .name{
     font-size:15px;

@@ -9,17 +9,18 @@ from werkzeug.security import check_password_hash, generate_password_hash, safe_
 from flask_jwt_extended import (JWTManager, create_access_token, create_refresh_token, decode_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 from bson.objectid import ObjectId
 from string_search import Search
-from timeline import View
-app = Flask(__name__)
-CORS(app)
-api = Api(app)
-app.config.from_mapping(
+import timeline 
+import sub_timeline
+application = Flask(__name__)
+CORS(application)
+api = Api(application)
+application.config.from_mapping(
     SECRET_KEY='dev',
 )
-app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
-app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
-jwt = JWTManager(app)
-mongo = PyMongo(app)
+application.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
+application.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
+jwt = JWTManager(application)
+mongo = PyMongo(application)
 
 
 parser = reqparse.RequestParser()
@@ -47,11 +48,12 @@ def auth(db):
     auth_token = {}
     if auth_header:
         auth_token = auth_header.split(" ")[1]
-    token_user = decode_token(auth_token)
-    user_id = token_user['identity']
-    collection = db.users
-    user = collection.find({'id': user_id})
-    return user
+        token_user = decode_token(auth_token)
+        user_id = token_user['identity']
+        collection = db.users
+        user = collection.find({'id': user_id})
+        return user
+
 
 def db_manager():
     client = MongoClient('mongodb://localhost:27017')
@@ -107,19 +109,20 @@ class UserDetail(Resource):
         db = db_manager()
         collection = db.users
         user = auth(db)
-        mongo_user = collection.find({'id': user[0]['id']})
-        dict_user = json.loads(dumps(mongo_user))
-        json_user = {
-            "_id": dict_user[0]['_id'],
-            "id": dict_user[0]['id'],
-            "nickname" : dict_user[0]['nickname'],
-            "fav_timeline" : dict_user[0]['fav_timeline'],
-            "fav_board" : dict_user[0]['fav_board'],
-            "fav_tag": dict_user[0]['fav_tag'],
-            "rank":dict_user[0]['rank']
-        }
-        MongoClient('mongodb://localhost:27017').close()
-        return json_user
+        if user:
+            mongo_user = collection.find({'id': user[0]['id']})
+            dict_user = json.loads(dumps(mongo_user))
+            json_user = {
+                "_id": dict_user[0]['_id'],
+                "id": dict_user[0]['id'],
+                "nickname" : dict_user[0]['nickname'],
+                "fav_timeline" : dict_user[0]['fav_timeline'],
+                "fav_board" : dict_user[0]['fav_board'],
+                "fav_tag": dict_user[0]['fav_tag'],
+                "rank":dict_user[0]['rank']
+            }
+            MongoClient('mongodb://localhost:27017').close()
+            return json_user
 
 class editNick(Resource):
     def put(self):
@@ -319,26 +322,20 @@ class TokenRefresh(Resource):
 class Timeline(Resource):
     def get(self, option):
         db= db_manager()
-        include_tag = [
-            # 메인
-            ["기타", "공지", "거래", "대나무숲", "반짝정원", "지식인", "장학"],
-            # 진로
-            ["창업지원단", "취업", "창업", "진로"],
-            # 스터디&모임
-            ['스터디&모임', "특강", "세미나", "봉사", "동아리"],
-            # 알바&구인
-            ["조교", "과외&강사", "알바&구인"],
-            # 행사&대외활동
-            ["행사", "봉사", "공모전&대외활동", "교육&설명회", "멘토링"],
-        ]
-        list = View(db,include_tag[option],[])
+        user = auth(db)
+        priority_tag = []
+        if user:
+            priority_tag = user[0]['fav_tag']
+        if option==0:
+            list = timeline.View(db, timeline.include_coll, timeline.include_tag, priority_tag, [])
+        else:
+            list = sub_timeline.View(db, sub_timeline.include_coll[option], sub_timeline.include_tag[option], [])
         json_list = dumps(list)
         return json_list
 
 
 class TimelineUpdate(Resource):
     def post(self):
-        print('hi')
         args = parser.parse_args()
         title = args['title']
         link = args['link']
@@ -492,7 +489,7 @@ class FavBoard(Resource):
                 'fav_board': {
                     '_id': _id,
                     'contents': target[0]['contents'],
-                    'date': target[0]['date']
+                    'date': [0]['date']
                 }
             }
             }
@@ -553,4 +550,4 @@ api.add_resource(RemoveTimeline,'/remove-timeline')
 
 api.add_resource(renewal_db,'/renewal')
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    application.run(debug=True, host='0.0.0.0')

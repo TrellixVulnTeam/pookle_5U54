@@ -49,6 +49,7 @@
 .main{
     background-color:white;
     border-radius:10px;
+    padding-top:10px;
 }
 .right-banner{
     writing-mode:tb-rl;

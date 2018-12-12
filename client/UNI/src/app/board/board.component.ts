@@ -75,12 +75,14 @@ export class BoardComponent implements OnInit {
     let user;
     this.uniService.getUserDetail().subscribe(
       response => {
-        user = {
-          user_id:response._id,
-          user_rank:response._rank
-        }
-        if(user.user_rank==10){
-          this.isAdmin=true;
+        if(user){
+          user = {
+            user_id:response._id,
+            user_rank:response._rank
+          }
+          if(user.user_rank==10){
+            this.isAdmin=true;
+          }
         }
     },
       error => console.log('이건 에러야 !!error', error)

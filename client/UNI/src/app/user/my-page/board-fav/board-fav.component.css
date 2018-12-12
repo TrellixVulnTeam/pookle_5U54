@@ -11,7 +11,7 @@
 }
 .red{
     color:red;
-    font-size:22px;
+    font-size:28px;
 }
 .fav-box{
     width:90%;
@@ -37,4 +37,9 @@
 .small-font{
     font-size:15px;
     color:#999999;
+}
+.delete_btn{
+    height:100%;
+    border:0px;
+    background-color: transparent;
 }

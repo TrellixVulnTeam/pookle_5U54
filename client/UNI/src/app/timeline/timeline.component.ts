@@ -20,6 +20,7 @@ export class TimelineComponent implements OnInit {
   search_word;
   postData;
   maxPost=20;
+  user;
   writeForm = this.fb.group({
     title:[''],
     link:[''],
@@ -44,14 +45,9 @@ export class TimelineComponent implements OnInit {
 
     if(window.location.pathname!='/timeline' ){
      this.searchList();
-    }
-
-    //window.addEventListener('scroll', this.scroll, true);
-    
+    }    
   }
-  scroll = (): void => {
-    console.log('hi');
-  };
+
   @HostListener('window:scroll', ['$event']) onScrollEvent($event){
     let pageHeight=document.documentElement.offsetHeight
     let windowHeight=window.innerHeight
@@ -169,21 +165,21 @@ export class TimelineComponent implements OnInit {
     if(window.location.pathname=='/timeline' || option>=1){
     this.router.navigate(['/timeline/']);
     if(localStorage.getItem('token')){
-    let user;
+
     this.uniService.getUserDetail().subscribe(
       response => {
-          user = {
+          this.user = {
             user_id:response._id,
             user_rank:response.rank
        }
-       if(user.user_rank==10){
+       if(this.user.user_rank==10){
         this.isAdmin=true;
       }
       },
       error => console.log('이건 에러야 !!error', error)
 
     );
-
+  }
     this.uniService.getTimelineList(option).subscribe(
       response => {
         this.posts = JSON.parse(response);
@@ -194,8 +190,9 @@ export class TimelineComponent implements OnInit {
           this.isFavorite[i]= false;
           if(this.posts[i].fav){
             let fav_len = this.posts[i].fav.length;
+            if(this.user)
             for(let j=0;j<fav_len;j++){
-              if(this.posts[i].fav[j].user_id.$oid == user.user_id.$oid){
+              if(this.posts[i].fav[j].user_id.$oid == this.user.user_id.$oid){
                 this.isFavorite[i]= true;
               }
             }
@@ -206,7 +203,8 @@ export class TimelineComponent implements OnInit {
       },
       error => console.log('error', error)
     );
-  }
+  
+
 }
   }
   searchList(){

@@ -39,9 +39,20 @@ export class HeaderComponent implements OnInit {
   }
   
   search(){
-    let word = this.searchForm.value;
+    let word = this.searchForm.value.word;
+    let split_word = word.split(" ");
+    let swi=0;
+    console.log(split_word);
+    for(let i=0;i<split_word.length;i++){
+      if(split_word[i].length==1)
+        swi=1;
+    }
+    if(swi==0){
     location.href='/timeline/'+this.searchForm.value.word;
     //this.router.navigate(['/timeline/'+this.searchForm.value.word]);
+    }else{
+      alert("두 글자 이상 입력해주세요!");
+    }
   }
 
 }
