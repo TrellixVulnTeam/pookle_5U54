@@ -1,11 +1,10 @@
+<div class="loading" *ngIf="!posts">
+    <br><br>
+    Loading....<br>
+    잠시만 기다려주세요.
+</div>
 <div class="container-fluid" id="timeline-container">
-    <div class="row">
-            <div class="loading" *ngIf="!posts">
-                    <br><br>
-                Loading....<br>
-                잠시만 기다려주세요.
-            </div>
-    </div>
+
 
     <div class="row">
             <div class="col-xl-2 col-0">
@@ -41,7 +40,7 @@
     
   
     <div class="main container col-xl-8">
-    <div *ngFor="let post of posts; index as i" class="post">
+    <div *ngFor="let post of small_posts; index as i" class="post">
         <a href="{{post.url}}" class="link-btn">
             <div class="block">
                 <a href="#" class="title">{{post.title}}</a>

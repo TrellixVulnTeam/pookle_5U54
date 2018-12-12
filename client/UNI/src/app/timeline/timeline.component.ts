@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-timeline',
@@ -13,10 +14,12 @@ import { switchMap } from 'rxjs/operators';
 export class TimelineComponent implements OnInit {
   isFavorite:Array<boolean>;
   posts;
+  small_posts;
   is_auth:boolean;
   isAdmin:boolean;
   search_word;
   postData;
+  maxPost=20;
   writeForm = this.fb.group({
     title:[''],
     link:[''],
@@ -38,14 +41,25 @@ export class TimelineComponent implements OnInit {
     }else{
       this.is_auth=false;
     }
+
     if(window.location.pathname!='/timeline' ){
      this.searchList();
     }
 
+    //window.addEventListener('scroll', this.scroll, true);
     
   }
-
-
+  scroll = (): void => {
+    console.log('hi');
+  };
+  @HostListener('window:scroll', ['$event']) onScrollEvent($event){
+    let pageHeight=document.documentElement.offsetHeight
+    let windowHeight=window.innerHeight
+    if(window.pageYOffset+windowHeight>=pageHeight){
+      this.maxPost+=5;
+      this.small_posts = this.posts.slice(0,this.maxPost+5);
+    }
+  }
   copyMessage(val: string){
     let selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
@@ -150,6 +164,8 @@ export class TimelineComponent implements OnInit {
   }
 
   getList(option:number=0){
+    window.scrollTo(0, 0);
+    this.posts='';
     if(window.location.pathname=='/timeline' || option>=1){
     this.router.navigate(['/timeline/']);
     if(localStorage.getItem('token')){
@@ -186,6 +202,7 @@ export class TimelineComponent implements OnInit {
           }
 
         }
+        this.small_posts = this.posts.slice(0,this.maxPost);
       },
       error => console.log('error', error)
     );
@@ -199,9 +216,6 @@ export class TimelineComponent implements OnInit {
     this.postData={
       word:this.search_word
     }
-
-
-
     this.uniService.search(this.postData).subscribe(
       response => {
         let user;
@@ -237,6 +251,7 @@ export class TimelineComponent implements OnInit {
           }
 
         }
+        this.small_posts = this.posts.slice(0,this.maxPost);
       },
       error => console.log('error',error)
     );

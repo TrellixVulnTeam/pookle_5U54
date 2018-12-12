@@ -492,7 +492,7 @@ class FavBoard(Resource):
                 'fav_board': {
                     '_id': _id,
                     'contents': target[0]['contents'],
-                    'date': [0]['date']
+                    'date': target[0]['date']
                 }
             }
             }

@@ -18,20 +18,21 @@ export class UniService {
     private http: HttpClient,
   ) { 
   }
+  url = "http://121.145.54.15:5000"
 
   registerNewUser(userData): Observable<any>{
-    return this.http.post('http://localhost:5000/users', userData)
+    return this.http.post(this.url+'/users', userData)
     //return this.http.post('http://123.142.171.25:5000/users', userData, httpOptions)
   }
 
   signIn(userData): Observable<any>{
-    return this.http.post('http://localhost:5000/user/login', userData)
+    return this.http.post(this.url+'/user/login', userData)
     //return this.http.post('http://123.142.171.25:5000/user/login', userData, httpOptions)
   }
   authentication():void{
     let token = localStorage.getItem('token');
     let tokenData = {'access_token':token}
-    let auth = this.http.post('http:/localhost:5000/auth', tokenData)
+    let auth = this.http.post(this.url+'//auth', tokenData)
     auth.subscribe(response => {
       this.current_user = {
         user_id:response['user_id'],
@@ -47,58 +48,58 @@ export class UniService {
 
   /// 유저
   getUserDetail():Observable<any>{
-    return this.http.get('http://localhost:5000/user');
+    return this.http.get(this.url+'/user');
   }
   editNick(nick):Observable<any>{
-    return this.http.put('http://localhost:5000/user/nick',nick);
+    return this.http.put(this.url+'/user/nick',nick);
   }
   changePasswd(pwForm):Observable<any>{
-    return this.http.put('http://localhost:5000/user/pw',pwForm);
+    return this.http.put(this.url+'/user/pw',pwForm);
   }
   loadUserList(): Observable<any>{
-    return this.http.get('http://localhost:5000/users')
+    return this.http.get(this.url+'/users')
   }
 
 
   //타임라인
   getTimelineList(option:number):Observable<any>{
     let postData = {option:option};
-    return this.http.get('http://localhost:5000/timeline/'+option)
+    return this.http.get(this.url+'/timeline/'+option)
   }
   favTimeline(postData):Observable<any>{
-    return this.http.put('http://localhost:5000/timeline/fav',postData); 
+    return this.http.put(this.url+'/timeline/fav',postData); 
   }
   unFavTimeline(postData):Observable<any>{
-    return this.http.put('http://localhost:5000/timeline/un-fav',postData); 
+    return this.http.put(this.url+'/timeline/un-fav',postData); 
   }
   addFavTag(tag):Observable<any>{
-    return this.http.post('http://localhost:5000/user/fav-tag',tag);
+    return this.http.post(this.url+'/user/fav-tag',tag);
   }
   removeFavTag(tag):Observable<any>{
-    return this.http.put('http://localhost:5000/user/fav-tag',tag); 
+    return this.http.put(this.url+'/user/fav-tag',tag); 
     // 삭제. delete메서드를 쓰고싶었으나 delete는 body를 담을 수 없으므로 put으로 대체.
   }
   removePost(id){
-    return this.http.put('http://localhost:5000/timeline',id); 
+    return this.http.put(this.url+'/timeline',id); 
   }
   writePost(postData):Observable<any>{
-    return this.http.post('http://localhost:5000/timeline',postData);
+    return this.http.post(this.url+'/timeline',postData);
   }
 
   
   // 게시판
   getBoardList():Observable<any>{
-    return this.http.get('http://localhost:5000/board')
+    return this.http.get(this.url+'/board')
   }
   sendPost(postData):Observable<any>{
-    return this.http.post('http://localhost:5000/board',postData);
+    return this.http.post(this.url+'/board',postData);
   }
   sendComment(postData, post_id):Observable<any>{
     let postData_ = {
       contents:postData.contents,
       _id:post_id
     }
-    return this.http.post('http://localhost:5000/board/comment',postData_);
+    return this.http.post(this.url+'/board/comment',postData_);
   }
   deleteComment(postData):Observable<any>{
     let postData_ = {
@@ -106,19 +107,19 @@ export class UniService {
       post_id:postData.post_id,
       comment_id:postData.comment_id
     }
-    return this.http.put('http://localhost:5000/board/comment', postData_);
+    return this.http.put(this.url+'/board/comment', postData_);
   }
   favBoard(id):Observable<any>{
-    return this.http.put('http://localhost:5000/board/fav',id); 
+    return this.http.put(this.url+'/board/fav',id); 
   }
   unFavBoard(id):Observable<any>{
-    return this.http.put('http://localhost:5000/board/un-fav',id); 
+    return this.http.put(this.url+'/board/un-fav',id); 
   }
 
 
   //검색
   search(postData):Observable<any>{
-    return this.http.post('http://localhost:5000/search',postData); 
+    return this.http.post(this.url+'/search',postData); 
   }
 }
 
