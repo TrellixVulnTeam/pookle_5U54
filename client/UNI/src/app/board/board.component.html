@@ -1,11 +1,11 @@
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Nanum+Pen+Script" rel="stylesheet">
 
 <div class="container" id="board-container">
-    <div class="write-div">
+    <div class="write-div" *ngIf="is_auth">
         <button (click)="write(content)" class="write-btn"><i class="fas fa-pencil-alt"></i> 글 쓰러 가기</button> 
     </div>
 
-    <div *ngFor="let post of posts; index as i" class="post">
+    <div *ngFor="let post of small_posts; index as i" class="post">
         <h3 class="nickname">{{post.author}}</h3>
         <span class="time">&nbsp;{{post.date}}</span>
         <div class="post-contents">{{post.contents}}</div>

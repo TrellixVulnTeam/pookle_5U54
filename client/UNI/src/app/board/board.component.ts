@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder } from '@angular/forms';
 import { UniService } from '../uni.Service';
+import { HostListener } from '@angular/core';
+
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -12,7 +14,10 @@ export class BoardComponent implements OnInit {
   closeResult: string;
   isFavorite:Array<boolean>;
   isAdmin:boolean;
+  is_auth:boolean;
   posts;
+  small_posts;
+  maxPost=13;
   writeForm = this.fb.group({
     contents: ['']
   });
@@ -25,7 +30,19 @@ export class BoardComponent implements OnInit {
     }
 
   ngOnInit() {
-
+    if(localStorage.getItem('token')){
+      this.is_auth=true;
+    }else{
+      this.is_auth=false;
+    }
+  }
+  @HostListener('window:scroll', ['$event']) onScrollEvent($event){
+    let pageHeight=document.documentElement.offsetHeight;
+    let windowHeight=window.innerHeight+3;
+    if(window.pageYOffset+windowHeight>=pageHeight){
+      this.maxPost+=5;
+      this.small_posts = this.posts.slice(0,this.maxPost+5);
+    }
   }
   write(content){
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -111,6 +128,7 @@ export class BoardComponent implements OnInit {
             }
           }
         }
+        this.small_posts = this.posts.slice(0,this.maxPost);
       },
       error => console.log('error', error)
     );

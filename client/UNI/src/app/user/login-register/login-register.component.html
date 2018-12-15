@@ -44,9 +44,13 @@
                 <label class="control-label" for="signupPasswordagain">Password question</label><br>            
                 <select class="question" name="question" formControlName="user_que">
                     <option value="">질문을 선택해주세요</option>
-                    <option value="나의 학과는?">나의 학과는?</option>
-                    <option value="나의 어머니 성함은?">나의 어머니 성함은?</option>
-                    <option value="나의 고향은?">나의 고향은?</option>
+                    <option value="1">나의 학과는?</option>
+                    <option value="2">나의 어머니 성함은?</option>
+                    <option value="3">나의 고향은?</option>
+                    <option value="4">나의 취미는?</option>
+                    <option value="5">나의 첫사랑은?</option>
+                    <option value="6">나의 아버지 성함은?</option>
+                    <option value="7">나의 라임오렌지 나무</option>
                 </select>
                 <input id="signupPassworquestion" type="text" maxlength="25" class="form-control" formControlName="user_ans">
                 </div>
@@ -77,22 +81,22 @@
                     <div class="form-group">
                       <label>계정을 입력해주세요.</label>
                       <div class="input-group">
-                        <input formControlName="account" class="form-control">
+                        <input formControlName="user_id" class="form-control">
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-outline-dark" (click)="move()">확인</button>
+                    <button type="submit" class="btn btn-outline-dark" >확인</button>
 
                   </form>
                 </div>
                 <div class="modal-body" centerPane>
                     <form [formGroup]="checkQuestionForm" (ngSubmit)="checkQuestion()">
                       <div class="form-group">
-                        <label>나의 어머니 성함은?</label>
+                        <label>{{que}}</label>
                         <div class="input-group">
-                          <input formControlName="answer" class="form-control">
+                          <input formControlName="user_ans" class="form-control">
                         </div>
                       </div>
-                      <button type="submit" class="btn btn-outline-dark" (click)="move()">확인</button>
+                      <button type="submit" class="btn btn-outline-dark" >확인</button>
                     </form>
                   </div>
                   <div class="modal-body" rightPane>
@@ -108,7 +112,7 @@
                             <input formControlName="pwc" type="password" class="form-control">
                           </div>
                         </div>
-                        <button type="submit" class="btn btn-outline-dark" (click)="move()">확인</button>
+                        <button type="submit" class="btn btn-outline-dark" >확인</button>
                       </form>
                     </div>
                     <div class="modal-body" finishPane>

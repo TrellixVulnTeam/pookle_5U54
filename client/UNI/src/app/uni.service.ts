@@ -18,8 +18,8 @@ export class UniService {
     private http: HttpClient,
   ) { 
   }
-  url = "http://121.145.54.15:5000"
-//  url = "http://127.0.0.1:5000"
+ // url = "http://121.145.54.15:5000"
+  url = "http://127.0.0.1:5000"
 
   registerNewUser(userData): Observable<any>{
     return this.http.post(this.url+'/users', userData)
@@ -60,7 +60,12 @@ export class UniService {
   loadUserList(): Observable<any>{
     return this.http.get(this.url+'/users')
   }
-
+  checkUserId(postData):Observable<any>{
+    return this.http.post(this.url+'/user/check-id',postData)
+  }
+  checkQueAns(postData):Observable<any>{
+    return this.http.post(this.url+'/user/check-que-ans',postData)
+  }
 
   //타임라인
   getTimelineList(option:number):Observable<any>{

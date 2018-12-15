@@ -38,7 +38,8 @@ parser.add_argument('comment_id')
 parser.add_argument('word')
 parser.add_argument('option')
 parser.add_argument('link')
-
+parser.add_argument('old_pw')
+parser.add_argument('new_pw')
 
 
 
@@ -53,7 +54,6 @@ def auth(db):
         collection = db.users
         user = collection.find({'id': user_id})
         return user
-
 
 def db_manager():
     client = MongoClient('mongodb://localhost:27017')
@@ -139,6 +139,31 @@ class editNick(Resource):
         MongoClient('mongodb://localhost:27017').close()
 
 
+class checkId(Resource):
+    def post(self):
+        args = parser.parse_args()
+        user_id = args['user_id']
+        db = db_manager()
+        collection = db.users
+        user = json.loads(dumps(collection.find({"id": user_id})))
+        print(user[0])
+        if user:
+            return user[0]
+        else :
+            return 0
+
+class checkQueAns(Resource):
+    def post(self):
+        args = parser.parse_args()
+        user_ans = args['user_ans']
+        user_id = args['user_id']
+        db = db_manager()
+        collection = db.users
+        user = json.loads(dumps(collection.find({"id":user_id})))
+        if  check_password_hash(user[0]['ans'], user_ans):
+            return 1
+        else :
+            return 0
 
 
 class changePasswd(Resource):
@@ -146,20 +171,26 @@ class changePasswd(Resource):
         db = db_manager()
         collection = db.users
         user = auth(db)
-        parser.add_argument('old_pw')
-        parser.add_argument('new_pw')
         args = parser.parse_args()
         old_pw = args['old_pw']
         new_pw = args['new_pw']
-        if check_password_hash(user[0]['user_pw'], old_pw):
+        if not user:
+            user_id = args['user_id']
+            collection.update(
+                {'id': user_id},
+                {'$set': {'pw': generate_password_hash(new_pw)}}
+            )
+            return 'success'
+        if check_password_hash(user[0]['pw'], old_pw):
             collection.update(
                 {'id': user[0]['id']},
                 {'$set': {'pw': generate_password_hash(new_pw)}}
-            ).close()
+            )
             return 'success'
         else:
             MongoClient('mongodb://localhost:27017').close()
             return 'fail'
+
 
 class favriteTag(Resource):
     def post(self):
@@ -411,6 +442,12 @@ class Board(Resource):
         contents = args['contents']
         client = MongoClient('mongodb://localhost:27017')
         db = client.pookle
+        collection = db.board
+        count =  json.loads(dumps(db.board.aggregate([{"$match":{}}, {"$count":"cnt"}])))[0]['cnt']
+        while count>1000:
+            recent = json.loads(dumps(collection.find().sort([("date", 1), ("_id", 1)]).limit(1)))[0]['_id']['$oid']
+            collection.remove({"_id":ObjectId(recent)})
+            count = json.loads(dumps(db.board.aggregate([{"$match": {}}, {"$count": "cnt"}])))[0]['cnt']
         user = auth(db)
         post = {
             "author": user[0]['_id'],
@@ -489,7 +526,7 @@ class FavBoard(Resource):
                 'fav_board': {
                     '_id': _id,
                     'contents': target[0]['contents'],
-                    'date': [0]['date']
+                    'date': target[0]['date']
                 }
             }
             }
@@ -534,15 +571,25 @@ api.add_resource(editNick,'/user/nick')
 api.add_resource(changePasswd, '/user/pw')
 api.add_resource(favriteTag, '/user/fav-tag')
 api.add_resource(Login, '/user/login')
+api.add_resource(checkId, '/user/check-id')
+api.add_resource(checkQueAns, '/user/check-que-ans')
+
+
 api.add_resource(Auth, '/auth')
-api.add_resource(Board, '/board')
-api.add_resource(Comment, '/board/comment')
+
+
 api.add_resource(TimelineUpdate, '/timeline')
 api.add_resource(Timeline, '/timeline/<int:option>')
 api.add_resource(FavTimeline, '/timeline/fav')
 api.add_resource(UnFavTimeline, '/timeline/un-fav')
+
+
+api.add_resource(Board, '/board')
+api.add_resource(Comment, '/board/comment')
 api.add_resource(FavBoard, '/board/fav')
 api.add_resource(UnFavBoard, '/board/un-fav')
+
+
 api.add_resource(WordSearch, '/search')
 
 
