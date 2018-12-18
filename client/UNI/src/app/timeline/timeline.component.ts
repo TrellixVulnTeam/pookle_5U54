@@ -5,7 +5,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { HostListener } from '@angular/core';
-
+import { NavigationStart, NavigationEnd, Event as NavigationEvent } from '@angular/router';
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
@@ -21,6 +21,8 @@ export class TimelineComponent implements OnInit {
   postData;
   maxPost=20;
   user;
+  isCollapsed = false;
+  isCategory = true;
   writeForm = this.fb.group({
     title:[''],
     link:[''],
@@ -30,10 +32,16 @@ export class TimelineComponent implements OnInit {
     private fb: FormBuilder, 
     private uniService: UniService,
     private route: ActivatedRoute,
-     private router: Router) { 
-       if(!this.search_word){
-        this.getList();
-       }
+     private router: Router,) { 
+
+       if(window.innerWidth>=992){
+        this.isCategory=false;
+      }else{
+        this.isCategory=true;
+      }
+
+      
+
   }
 
   ngOnInit() {
@@ -41,11 +49,10 @@ export class TimelineComponent implements OnInit {
       this.is_auth=true;
     }else{
       this.is_auth=false;
-    }
-
-    if(window.location.pathname!='/timeline' ){
-     this.searchList();
-    }    
+    }       
+    
+        this.getList();
+    
   }
 
   @HostListener('window:scroll', ['$event']) onScrollEvent($event){
@@ -54,6 +61,14 @@ export class TimelineComponent implements OnInit {
     if(window.pageYOffset+windowHeight>=pageHeight){
       this.maxPost+=5;
       this.small_posts = this.posts.slice(0,this.maxPost+5);
+    }
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if(window.innerWidth>=992){
+      this.isCategory=false;
+    }else{
+      this.isCategory=true;
     }
   }
   copyMessage(val: string){
@@ -162,24 +177,23 @@ export class TimelineComponent implements OnInit {
   getList(option:number=0){
     window.scrollTo(0, 0);
     this.posts='';
-    if(window.location.pathname=='/timeline' || option>=1){
-    this.router.navigate(['/timeline/']);
-    if(localStorage.getItem('token')){
+    if(window.location.pathname=='/timeline' || option >=1){
+      this.router.navigate(['/timeline/']);
+      if(localStorage.getItem('token')){
+      this.uniService.getUserDetail().subscribe(
+        response => {
+            this.user = {
+              user_id:response._id,
+              user_rank:response.rank
+        }
+        if(this.user.user_rank==10){
+          this.isAdmin=true;
+        }
+        },
+        error => console.log('이건 에러야 !!error', error)
 
-    this.uniService.getUserDetail().subscribe(
-      response => {
-          this.user = {
-            user_id:response._id,
-            user_rank:response.rank
-       }
-       if(this.user.user_rank==10){
-        this.isAdmin=true;
-      }
-      },
-      error => console.log('이건 에러야 !!error', error)
-
-    );
-  }
+      );
+    }
     this.uniService.getTimelineList(option).subscribe(
       response => {
         this.posts = JSON.parse(response);
@@ -205,18 +219,15 @@ export class TimelineComponent implements OnInit {
     );
   
 
+}else{
+  this.searchList();
 }
-  }
+}
   searchList(){
     this.route.params.subscribe(params => {
-      this.search_word = params['word']; // (+) converts string 'id' to a number
+      this.search_word = params['word']; 
     });
-    this.postData={
-      word:this.search_word
-    }
-    this.uniService.search(this.postData).subscribe(
-      response => {
-        let user;
+    let user;
         if(localStorage.getItem('token')){
           
           this.uniService.getUserDetail().subscribe(
@@ -233,6 +244,11 @@ export class TimelineComponent implements OnInit {
       
           );
         }
+    this.postData={
+      word:this.search_word
+    }
+    this.uniService.search(this.postData).subscribe(
+      response => {
         this.posts = JSON.parse(response);
         let len = this.posts.length;
         this.isFavorite= [];
@@ -250,9 +266,11 @@ export class TimelineComponent implements OnInit {
 
         }
         this.small_posts = this.posts.slice(0,this.maxPost);
+        
       },
       error => console.log('error',error)
     );
+  
   }
 
 

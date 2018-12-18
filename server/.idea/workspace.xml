@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db6a028f-afd4-4050-85e9-90877366dc1a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/board/board.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/board/board.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/board/board.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/board/board.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/uni.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/uni.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/user/login-register/login-register.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/user/login-register/login-register.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/user/login-register/login-register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/user/login-register/login-register.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wsgi.ini" beforeDir="false" afterPath="$PROJECT_DIR$/wsgi.ini" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,8 +18,11 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="446" selection-start-line="446" selection-end-line="446" />
+            <state relative-caret-position="282">
+              <caret line="517" column="25" selection-start-line="517" selection-start-column="25" selection-end-line="517" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -50,6 +50,9 @@
       <find>find</find>
       <find>change</find>
       <find>remove</find>
+      <find>board</find>
+      <find>user_id</find>
+      <find>fav</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -76,7 +79,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -88,6 +90,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -120,7 +123,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="974" height="1047" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19444445" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -150,6 +152,23 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8341">
+          <caret line="439" column="19" selection-start-line="439" selection-start-column="19" selection-end-line="439" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8341">
+          <caret line="439" column="19" lean-forward="true" selection-start-line="439" selection-start-column="19" selection-end-line="439" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9557">
@@ -320,8 +339,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="446" selection-start-line="446" selection-end-line="446" />
+        <state relative-caret-position="282">
+          <caret line="517" column="25" selection-start-line="517" selection-start-column="25" selection-end-line="517" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -27,4 +27,9 @@
         <board-fav [data]="board_data"></board-fav>
       </div>
     </div>
+  <div class="row">
+    <div class="col-6">
+      <timeline-fav (refresh) = "refresh($event)" [data]="timeline_data"></timeline-fav>
+    </div>
+  </div>
 </div>

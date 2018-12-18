@@ -92,7 +92,7 @@ export class BoardComponent implements OnInit {
     let user;
     this.uniService.getUserDetail().subscribe(
       response => {
-        if(user){
+        if(response){
           user = {
             user_id:response._id,
             user_rank:response._rank
@@ -101,37 +101,40 @@ export class BoardComponent implements OnInit {
             this.isAdmin=true;
           }
         }
+
+        this.uniService.getBoardList().subscribe(
+          response => {
+            this.posts = JSON.parse(response);
+            let post_len = this.posts.length;
+            let comment_len;
+            this.isFavorite= [];
+            this.isCollapsed=[];
+            for(let i=0;i<post_len;i++){
+              comment_len = this.posts[i].comment.length;
+              this.posts[i].date = this.timeConverter(this.posts[i].date.$date);
+              this.isFavorite[i]= false;
+              this.isCollapsed[i] =true;
+              for(let j=0;j<comment_len;j++){
+                this.posts[i].comment[j].date = this.timeConverter(this.posts[i].comment[j].date.$date);
+              }
+              if(this.posts[i].fav){
+                let fav_len = this.posts[i].fav.length;
+                for(let j=0;j<fav_len;j++){
+                  if(this.posts[i].fav[j].user_id.$oid == user.user_id.$oid){
+                    this.isFavorite[i]= true;
+                  }
+                
+                }
+              }
+            }
+            this.small_posts = this.posts.slice(0,this.maxPost);
+          },
+          error => console.log('error', error)
+        );
     },
       error => console.log('이건 에러야 !!error', error)
     );
-    this.uniService.getBoardList().subscribe(
-      response => {
-        this.posts = JSON.parse(response);
-        let post_len = this.posts.length;
-        let comment_len;
-        this.isFavorite= [];
-        this.isCollapsed=[];
-        for(let i=0;i<post_len;i++){
-          comment_len = this.posts[i].comment.length;
-          this.posts[i].date = this.timeConverter(this.posts[i].date.$date);
-          this.isFavorite[i]= false;
-          this.isCollapsed[i] =true;
-          for(let j=0;j<comment_len;j++){
-            this.posts[i].comment[j].date = this.timeConverter(this.posts[i].comment[j].date.$date);
-          }
-          if(this.posts[i].fav){
-            let fav_len = this.posts[i].fav.length;
-            for(let j=0;j<fav_len;j++){
-              if(this.posts[i].fav[j].user_id.$oid == user.user_id.$oid){
-                this.isFavorite[i]= true;
-              }
-            }
-          }
-        }
-        this.small_posts = this.posts.slice(0,this.maxPost);
-      },
-      error => console.log('error', error)
-    );
+   
   }
 
   favorite(ind : number){

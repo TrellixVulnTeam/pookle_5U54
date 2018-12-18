@@ -443,7 +443,10 @@ class Board(Resource):
         client = MongoClient('mongodb://localhost:27017')
         db = client.pookle
         collection = db.board
-        count =  json.loads(dumps(db.board.aggregate([{"$match":{}}, {"$count":"cnt"}])))[0]['cnt']
+        if dumps(db.board.find()) != "[]":
+            count =  json.loads(dumps(db.board.aggregate([{"$match":{}}, {"$count":"cnt"}])))[0]['cnt']
+        else:
+            count=0
         while count>1000:
             recent = json.loads(dumps(collection.find().sort([("date", 1), ("_id", 1)]).limit(1)))[0]['_id']['$oid']
             collection.remove({"_id":ObjectId(recent)})
