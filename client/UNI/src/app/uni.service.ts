@@ -81,8 +81,15 @@ export class UniService {
   addFavTag(tag):Observable<any>{
     return this.http.post(this.url+'/user/fav-tag',tag);
   }
+  addBlackTag(tag):Observable<any>{
+    return this.http.post(this.url+'/user/black-tag',tag);
+  }
   removeFavTag(tag):Observable<any>{
     return this.http.put(this.url+'/user/fav-tag',tag); 
+    // 삭제. delete메서드를 쓰고싶었으나 delete는 body를 담을 수 없으므로 put으로 대체.
+  }
+  removeBlackTag(tag):Observable<any>{
+    return this.http.put(this.url+'/user/black-tag',tag); 
     // 삭제. delete메서드를 쓰고싶었으나 delete는 body를 담을 수 없으므로 put으로 대체.
   }
   removePost(id){

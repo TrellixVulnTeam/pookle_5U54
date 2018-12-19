@@ -200,6 +200,11 @@ export class TimelineComponent implements OnInit {
         let len = this.posts.length;
         this.isFavorite= [];
         for(let i=0;i<len;i++){
+          if(this.posts[i].post == 0){
+            this.posts[i].post = "[System]해당 사이트 로그인 후에 열람가능합니다.";
+          }else if(this.posts[i].post == 1 || this.posts[i].post == ""){
+            this.posts[i].post = "[System]링크를 눌러서 확인해보세요!"
+          }
           this.posts[i].date = this.timeConverter(this.posts[i].date);
           this.isFavorite[i]= false;
           if(this.posts[i].fav){
@@ -287,6 +292,7 @@ export class TimelineComponent implements OnInit {
   
   addFavTag(post_index, tag_index){
     if(localStorage.getItem('token')){
+      alert("관심태그에 추가되었습니다!");
       let fav_tag = {'fav_tag':this.posts[post_index].tag[tag_index]};
       this.uniService.addFavTag(fav_tag).subscribe(
         response =>{},
@@ -295,7 +301,21 @@ export class TimelineComponent implements OnInit {
     }else{
       alert("태그를 저장하는 기능입니다. 로그인 후에 사용가능합니다.")
     }
-
+  }
+  addBlackTag(post_index, tag_index){
+    if(localStorage.getItem('token')){
+      alert("블랙리스트에 추가되었습니다!");
+      let black_tag = {'black_tag':this.posts[post_index].tag[tag_index]};
+      this.uniService.addBlackTag(black_tag).subscribe(
+        response =>{},
+        error => console.log('error', error)
+      );
+    }else{
+      alert("태그를 저장하는 기능입니다. 로그인 후에 사용가능합니다.")
+    }
+  }
+  search_tag(tag){
+    location.href='/timeline/'+tag;
   }
 
 }

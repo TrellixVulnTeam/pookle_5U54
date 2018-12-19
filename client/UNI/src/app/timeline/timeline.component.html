@@ -65,7 +65,14 @@
                 ngbPopover="복사되었습니다." popoverTitle="알림" class="url-copy-btn" ><i class="far fa-copy url-copy-btn"></i></a>
         <div *ngFor="let tag of post.tag; index as k" class="popover_div">
             <button *ngIf="!is_auth" placement="top" ngbPopover="로그인 후 이용해주세요" popoverTitle="알림" (click)="addFavTag(i, k)" class="tag">{{tag}}</button>
-            <button *ngIf="is_auth" placement="top" ngbPopover="관심태그에 추가되었습니다." popoverTitle="알림" (click)="addFavTag(i, k)" class="tag">{{tag}}</button>
+            <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <button class="tag" ngbDropdownToggle>{{tag}}</button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button *ngIf="is_auth" (click)="addFavTag(i, k)" class="dropdown-item boder-bottom">자주 볼래요!</button>
+                    <button *ngIf="is_auth" (click)="addBlackTag(i, k)" class="dropdown-item boder-bottom center-button">안 볼래요...</button>
+                    <button (click)="search_tag(tag)" class="dropdown-item">태그로 검색</button>
+                </div>
+              </div>
         </div>
         <button class="remove-btn float-right" *ngIf="isAdmin" (click)="removePost(i)">제거</button>
     </div>

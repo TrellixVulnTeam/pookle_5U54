@@ -2,25 +2,9 @@
     margin-top:160px;
     height:1000px;
 }
-.menu{
-    border:0px;
-    border-radius: 50px;
-    display: inline-block;
-    vertical-align:center;
-    background-color:#212529;
-    color:#fed136;
-    margin:20px;
-    margin-top:10px;
-    width:60px;
-    height:60px;
-    -webkit-transition:width 1s, height 1s, background-color 1s, -webkit-transform 1s;
-    transition:width 1s, height 1s, background-color 1s, transform 1s;
-}
-.menu:hover{
-    width:90px;
-    height:90px;
-    border-radius: 60px;
-    font-size:12px;
-    -webkit-transition:width 1s, height 1s, background-color 1s, -webkit-transform 1s;
-    transition:width 1s, height 1s, background-color 1s, transform 1s;
+@media (max-width: 576px) {
+    .container{
+        margin-top:90px;
+        height:2300px;
+    }
 }

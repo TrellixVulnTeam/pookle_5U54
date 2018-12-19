@@ -32,6 +32,7 @@ import { BoardFavComponent } from './user/my-page/board-fav/board-fav.component'
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { SearchTimelineComponent } from './search-timeline/search-timeline.component';
+import { BlacklistComponent } from './user/my-page/blacklist/blacklist.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { SearchTimelineComponent } from './search-timeline/search-timeline.compo
     ProfileComponent,
     TimelineFavComponent,
     BoardFavComponent,
-    SearchTimelineComponent
+    SearchTimelineComponent,
+    BlacklistComponent
   ],
   imports: [
     BrowserModule,

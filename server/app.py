@@ -90,6 +90,7 @@ class UserList(Resource):
             "fav_board":[],
             "comment":[],
             "fav_tag": [],
+            "black_tag": [],
             "reg_date": datetime.datetime.now(),
             "last_date": datetime.datetime.now(),
             "rank":0
@@ -119,6 +120,7 @@ class UserDetail(Resource):
                 "fav_timeline" : dict_user[0]['fav_timeline'],
                 "fav_board" : dict_user[0]['fav_board'],
                 "fav_tag": dict_user[0]['fav_tag'],
+                "black_tag": dict_user[0]['black_tag'],
                 "rank":dict_user[0]['rank']
             }
             MongoClient('mongodb://localhost:27017').close()
@@ -217,6 +219,34 @@ class favriteTag(Resource):
         collection.update(
             {'id': user[0]['id']},
             {'$pull': {'fav_tag': fav_tag}}
+        )
+        MongoClient('mongodb://localhost:27017').close()
+        
+class BlacklistTag(Resource):
+    def post(self):
+        parser.add_argument('black_tag')
+        args = parser.parse_args()
+        black_tag = args['black_tag']
+        db = db_manager()
+        collection = db.users
+        user = auth(db)
+        collection.update(
+            {'id': user[0]['id']},
+            {'$push': {'black_tag': black_tag}}
+        )
+        MongoClient('mongodb://localhost:27017').close()
+
+
+    def put(self):
+        parser.add_argument('black_tag')
+        args = parser.parse_args()
+        black_tag = args['black_tag']
+        db = db_manager()
+        collection = db.users
+        user = auth(db)
+        collection.update(
+            {'id': user[0]['id']},
+            {'$pull': {'black_tag': black_tag}}
         )
         MongoClient('mongodb://localhost:27017').close()
 
@@ -355,10 +385,12 @@ class Timeline(Resource):
         db= db_manager()
         user = auth(db)
         priority_tag = []
+        exclude_tag = []
         if user:
             priority_tag = user[0]['fav_tag']
+            exclude_tag = user[0]['black_tag']
         if option==0:
-            list = timeline.View(db, timeline.include_coll, timeline.include_tag, priority_tag, [])
+            list = timeline.View(db, timeline.include_coll, timeline.include_tag, priority_tag, exclude_tag)
         else:
             list = sub_timeline.View(db, sub_timeline.include_coll[option], sub_timeline.include_tag[option], [])
         json_list = dumps(list)
@@ -573,6 +605,7 @@ api.add_resource(UserDetail,'/user')
 api.add_resource(editNick,'/user/nick')
 api.add_resource(changePasswd, '/user/pw')
 api.add_resource(favriteTag, '/user/fav-tag')
+api.add_resource(BlacklistTag, '/user/black-tag')
 api.add_resource(Login, '/user/login')
 api.add_resource(checkId, '/user/check-id')
 api.add_resource(checkQueAns, '/user/check-que-ans')

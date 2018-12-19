@@ -29,3 +29,11 @@
     color:#999999;
 }
 
+@media (max-width: 576px) {
+    .container{
+        width:100%;
+        margin:20px 0px;
+        padding:10px;
+
+    }
+}

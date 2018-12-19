@@ -191,8 +191,9 @@
     overflow: hidden; 
     text-overflow: ellipsis; 
     white-space: normal; 
-    line-height: 1.2; 
-    height: 2.4em; 
+    line-height: 1.2;
+    min-height:1.2em; 
+    max-height: 3.6em; 
     text-align: left; 
     word-wrap: break-word; 
     display: -webkit-box; 
@@ -243,4 +244,11 @@
     font-size:20px;
     font-family: 'Do Hyeon', sans-serif;
 
+}
+.boder-bottom{
+    border-bottom:1px solid #DDDDDD;
+}
+.center-button{
+    padding-top:8px;
+    padding-bottom:8px;
 }

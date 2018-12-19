@@ -11,6 +11,8 @@ export class MyPageComponent implements OnInit {
   timeline_data;
   board_data;
   tag_data;
+  black_tag;
+
   constructor(private uniService: UniService) {
     this.getUserDetail();
    }
@@ -49,6 +51,7 @@ export class MyPageComponent implements OnInit {
           this.board_data[i].date = this.board_timeConverter(this.board_data[i].date.$date);
         }
         this.tag_data = response.fav_tag;
+        this.black_tag = response.black_tag;
       },   
       error => console.log('이건 에러야 !!error', error)
     );
