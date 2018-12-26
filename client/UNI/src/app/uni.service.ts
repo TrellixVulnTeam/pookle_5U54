@@ -18,8 +18,8 @@ export class UniService {
     private http: HttpClient,
   ) { 
   }
-  url = "http://121.145.54.15:5000"
-  //url = "http://127.0.0.1:5000"
+  //url = "http://121.145.54.15:5000"
+  url = "http://127.0.0.1:5000"
 
   registerNewUser(userData): Observable<any>{
     return this.http.post(this.url+'/users', userData)
@@ -72,6 +72,18 @@ export class UniService {
     let postData = {option:option};
     return this.http.get(this.url+'/timeline/'+option)
   }
+  getAdminPost():Observable<any>{
+    return this.http.get(this.url+'/timeline/admin')
+  }
+  getAdvertise():Observable<any>{
+    return this.http.get(this.url+'/timeline/advertise')
+  }
+  writePost(postData):Observable<any>{
+    return this.http.post(this.url+'/timeline/admin',postData);
+  }
+  writeAdvertise(postData):Observable<any>{
+    return this.http.post(this.url+'/timeline/advertise',postData);
+  }
   favTimeline(postData):Observable<any>{
     return this.http.put(this.url+'/timeline/fav',postData); 
   }
@@ -95,9 +107,7 @@ export class UniService {
   removePost(id){
     return this.http.put(this.url+'/timeline',id); 
   }
-  writePost(postData):Observable<any>{
-    return this.http.post(this.url+'/timeline',postData);
-  }
+
 
   
   // 게시판
@@ -107,6 +117,16 @@ export class UniService {
   sendPost(postData):Observable<any>{
     return this.http.post(this.url+'/board',postData);
   }
+  deletePost(id):Observable<any>{
+    return this.http.delete(this.url+'/board?id='+id);
+  }
+  updatePost(postData):Observable<any>{
+    let postData_ = {
+      type:'update',
+      post_id:postData.post_id,
+    }
+    return this.http.put(this.url+'/board', postData_);
+  }
   sendComment(postData, post_id):Observable<any>{
     let postData_ = {
       contents:postData.contents,
@@ -115,6 +135,14 @@ export class UniService {
     return this.http.post(this.url+'/board/comment',postData_);
   }
   deleteComment(postData):Observable<any>{
+    let postData_ = {
+      type:'delete',
+      post_id:postData.post_id,
+      comment_id:postData.comment_id
+    }
+    return this.http.put(this.url+'/board/comment', postData_);
+  }
+  updateComment(postData):Observable<any>{
     let postData_ = {
       type:'delete',
       post_id:postData.post_id,

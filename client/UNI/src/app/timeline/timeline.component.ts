@@ -15,8 +15,11 @@ export class TimelineComponent implements OnInit {
   isFavorite:Array<boolean>;
   posts;
   small_posts;
+  admin_post;
+  advertise_post;
   is_auth:boolean;
   isAdmin:boolean;
+  isFull:boolean = false;
   search_word;
   postData;
   maxPost=20;
@@ -25,8 +28,14 @@ export class TimelineComponent implements OnInit {
   isCategory = true;
   writeForm = this.fb.group({
     title:[''],
-    link:[''],
     contents: ['']
+  });
+  advertiseForm = this.fb.group({
+    title:[''],
+    contents: [''],
+    url:[''],
+    img:[''],
+    date:['']
   });
   constructor(private modalService: NgbModal,
     private fb: FormBuilder, 
@@ -50,8 +59,9 @@ export class TimelineComponent implements OnInit {
     }else{
       this.is_auth=false;
     }       
-    
-        this.getList();
+    this.getAdvertise();
+    this.getAdminPost();
+    this.getList();
     
   }
 
@@ -84,7 +94,7 @@ export class TimelineComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
   }
-  timeConverter(UNIX_timestamp){
+  timeConverter(UNIX_timestamp:any){
     UNIX_timestamp = UNIX_timestamp.replace(/[^0-9]/g,"");
     let year:number = UNIX_timestamp.substring(0,4);
     let month:number = UNIX_timestamp.substring(4,6)-1;
@@ -95,9 +105,7 @@ export class TimelineComponent implements OnInit {
     let date = new Date(year, month, day, hour, min,sec);
 
     let now = Math.round(new Date().getTime());
-
     let elapsed_time = (now-date.getTime())/1000;
-
     if(elapsed_time>=2592000){
       elapsed_time /= 2592000;
       return Math.floor(elapsed_time)+"개월 전";
@@ -150,6 +158,7 @@ export class TimelineComponent implements OnInit {
     });
   }
   send(){
+    console.log(this.writeForm.value);
     this.uniService.writePost(this.writeForm.value).subscribe(
       response => {
         this.getList();
@@ -158,6 +167,17 @@ export class TimelineComponent implements OnInit {
     );
     this.modalService.dismissAll();
   }
+
+  adv_send(files: FileList){
+    this.uniService.writeAdvertise(this.advertiseForm.value).subscribe(
+      response => {
+        this.getList();
+      },
+      error => console.log('error',error)
+    );
+    this.modalService.dismissAll();
+  }
+
   close(){
     this.modalService.dismissAll();
   }
@@ -172,6 +192,37 @@ export class TimelineComponent implements OnInit {
         error=>console.log('error',error)
       );
     }
+  }
+
+  getAdvertise(){
+    this.uniService.getAdvertise().subscribe(
+      response => {
+        this.advertise_post = JSON.parse(response);
+        console.log(this.advertise_post);
+        this.getList();
+      },
+      error => console.log('error',error)
+    );
+  }
+
+
+  getAdminPost(){
+    this.uniService.getAdminPost().subscribe(
+      response => {
+          this.admin_post = JSON.parse(response);
+          this.admin_post.isFull = true;
+          this.admin_post.date = this.timeConverter(this.admin_post.date);
+          if(this.admin_post.post.length>175 && !this.isFull){
+            this.admin_post.post= this.admin_post.post.slice(0,175);
+            this.admin_post.isFull = false;
+          }
+      },
+      error => console.log('이건 에러야 !!error', error)
+    );
+  }
+  fullPost(){
+    this.isFull =!this.isFull;
+    this.getAdminPost();
   }
 
   getList(option:number=0){
@@ -207,6 +258,11 @@ export class TimelineComponent implements OnInit {
           }
           this.posts[i].date = this.timeConverter(this.posts[i].date);
           this.isFavorite[i]= false;
+          if(this.posts[i].fav_cnt>=10000){
+            this.posts[i].fav_cnt-=10000;
+            this.posts[i].admin = true;
+          }
+
           if(this.posts[i].fav){
             let fav_len = this.posts[i].fav.length;
             if(this.user)

@@ -81,6 +81,37 @@
         border-radius:10px;
         padding-top:10px;
     }
+    .admin_post{
+        border:1px solid #BBBBBB;
+        border-radius: 10px;
+        padding:10px;
+        margin:10px;
+        font-family: 'Do Hyeon', sans-serif;
+
+    }
+    .admin_title{
+        font-size:25px;
+        font-weight: bold;
+        margin-bottom:0px;
+    }
+    .admin_date{
+        font-size:25px;
+        font-weight: bold;
+    }
+
+    .admin_content{
+        padding:0 10px; 
+        font-size:20px;
+
+    }
+    .more{
+        color:#999999;
+        background-color: transparent;
+        border:0px;
+    }
+    .more:hover{
+        text-decoration: underline;
+    }
 
 }
 @media (max-width: 576px) {

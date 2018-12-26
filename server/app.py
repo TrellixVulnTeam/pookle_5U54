@@ -6,6 +6,7 @@ from flask_pymongo import PyMongo
 from pymongo import MongoClient
 from bson.json_util import dumps
 from werkzeug.security import check_password_hash, generate_password_hash, safe_str_cmp
+from werkzeug import secure_filename
 from flask_jwt_extended import (JWTManager, create_access_token, create_refresh_token, decode_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 from bson.objectid import ObjectId
 from string_search import Search
@@ -32,16 +33,18 @@ parser.add_argument('access_token')
 parser.add_argument('title')
 parser.add_argument('contents')
 parser.add_argument('_id')
+parser.add_argument('id')
 parser.add_argument('type')
 parser.add_argument('post_id')
 parser.add_argument('comment_id')
 parser.add_argument('word')
 parser.add_argument('option')
-parser.add_argument('link')
+parser.add_argument('url')
 parser.add_argument('old_pw')
 parser.add_argument('new_pw')
-
-
+parser.add_argument('img')
+parser.add_argument('url')
+parser.add_argument('date')
 
 
 def auth(db):
@@ -148,7 +151,6 @@ class checkId(Resource):
         db = db_manager()
         collection = db.users
         user = json.loads(dumps(collection.find({"id": user_id})))
-        print(user[0])
         if user:
             return user[0]
         else :
@@ -396,27 +398,30 @@ class Timeline(Resource):
         json_list = dumps(list)
         return json_list
 
-
-class TimelineUpdate(Resource):
+class TimelineAdmin(Resource):
+    def get(self):
+        db=db_manager()
+        list = dumps(db.admin_post.find().sort([("date", -1), ("_id", 1)]).limit(1)[0])
+        return list
     def post(self):
         args = parser.parse_args()
         title = args['title']
-        link = args['link']
         contents = args['contents']
         client = MongoClient('mongodb://localhost:27017')
         db = client.pookle
+        now= datetime.datetime.now()
+        date = now.strftime("%Y-%m-%d %H:%M:%S")
         post = {
-            "url": link,
             "title": title,
-            "date": datetime.datetime.now(),
             "post": contents,
-            "tag":[],
-            "view":0,
-            "fav_cnt":0
+            "date": date
         }
         db.admin_post.insert(post)
         client.close()
         return 0
+
+
+class TimelineUpdate(Resource):
     def put(self):
         parser.add_argument('$oid')
         args = parser.parse_args()
@@ -451,6 +456,17 @@ class RemoveTimeline(Resource):
                 db[col].remove({})
         db.recent_date.remove({})
         db.SEARCH_PK_pknulec_lecture.remove({})
+
+class SearchTimeline(Resource):
+    def get(self):
+        client = MongoClient('mongodb://localhost:27017')
+        db = client.pookle
+        json_list=""
+        for col in db.collection_names():
+            if(col[0:2] == 'PK'):
+                list = dumps(db[col].find({"url":""}))
+                json_list += list
+        return json_list
 
 
 class Board(Resource):
@@ -492,6 +508,14 @@ class Board(Resource):
             "date":datetime.datetime.now()
         }
         db.board.insert(post)
+        client.close()
+        return 0
+    def delete(self):
+        args = request.args
+        id = args['id']
+        client = MongoClient('mongodb://localhost:27017')
+        db = client.pookle
+        db.board.remove({'_id': ObjectId(id)})
         client.close()
         return 0
 
@@ -600,6 +624,34 @@ class WordSearch(Resource):
         json_list = dumps(list)
         return json_list
 
+class Advertise(Resource):
+    def get(self):
+        db=db_manager()
+        list=dumps(db.advertise.find().limit(1)[0])
+        print(list)
+        return list
+    def post(self):
+        print('hi')
+        args = parser.parse_args()
+        title = args['title']
+        contents = args['contents']
+        url = args['url']
+        img = args['img']
+        date = args['date']
+        now = datetime.datetime.now()
+        now_date = now.strftime("%Y-%m-%d %H:%M:%S")
+        db = db_manager()
+        adv = {
+            'title': title,
+            'contents': contents,
+            'url': url,
+            'img': img,
+            'date': now_date,
+            'fin_date': date
+        }
+        db.advertise.insert(adv)
+        return 0
+
 api.add_resource(UserList, '/users')
 api.add_resource(UserDetail,'/user')
 api.add_resource(editNick,'/user/nick')
@@ -613,12 +665,12 @@ api.add_resource(checkQueAns, '/user/check-que-ans')
 
 api.add_resource(Auth, '/auth')
 
-
+api.add_resource(TimelineAdmin, '/timeline/admin')
 api.add_resource(TimelineUpdate, '/timeline')
 api.add_resource(Timeline, '/timeline/<int:option>')
 api.add_resource(FavTimeline, '/timeline/fav')
 api.add_resource(UnFavTimeline, '/timeline/un-fav')
-
+api.add_resource(Advertise, '/timeline/advertise')
 
 api.add_resource(Board, '/board')
 api.add_resource(Comment, '/board/comment')
@@ -630,7 +682,7 @@ api.add_resource(WordSearch, '/search')
 
 
 api.add_resource(RemoveTimeline,'/remove-timeline')
-
+api.add_resource(SearchTimeline,'/search-timeline')
 api.add_resource(renewal_db,'/renewal')
 if __name__ == '__main__':
     application.run(debug=True, host='0.0.0.0')

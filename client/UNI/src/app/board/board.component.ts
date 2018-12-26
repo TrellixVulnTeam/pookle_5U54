@@ -16,6 +16,7 @@ export class BoardComponent implements OnInit {
   isAdmin:boolean;
   is_auth:boolean;
   posts;
+  user;
   small_posts;
   maxPost=13;
   writeForm = this.fb.group({
@@ -88,16 +89,24 @@ export class BoardComponent implements OnInit {
       error => console.log('error',error)
     );
   }
+  delete_post(post_ind:number){
+    this.uniService.deletePost(this.posts[post_ind]._id.$oid).subscribe(
+      response => {
+        this.getList();
+      },
+      error => console.log('error',error)
+    );
+  }
   getList(){
-    let user;
     this.uniService.getUserDetail().subscribe(
       response => {
         if(response){
-          user = {
+          this.user = {
             user_id:response._id,
-            user_rank:response._rank
+            user_uid:response.id,
+            user_rank:response.rank
           }
-          if(user.user_rank==10){
+          if(this.user.user_rank==10){
             this.isAdmin=true;
           }
         }
@@ -119,8 +128,9 @@ export class BoardComponent implements OnInit {
               }
               if(this.posts[i].fav){
                 let fav_len = this.posts[i].fav.length;
+                if(this.user)
                 for(let j=0;j<fav_len;j++){
-                  if(this.posts[i].fav[j].user_id.$oid == user.user_id.$oid){
+                  if(this.posts[i].fav[j].user_id.$oid == this.user.user_id.$oid){
                     this.isFavorite[i]= true;
                   }
                 
