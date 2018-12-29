@@ -1,28 +1,23 @@
 import datetime, json
 from flask_restful import reqparse, abort, Api, Resource, request
 from flask_cors import CORS
-from flask import Flask, session ,render_template
-from flask_pymongo import PyMongo
+from flask import Flask, session, render_template
 from pymongo import MongoClient
 from bson.json_util import dumps
 from werkzeug.security import check_password_hash, generate_password_hash, safe_str_cmp
 from werkzeug import secure_filename
-from flask_jwt_extended import (JWTManager, create_access_token, create_refresh_token, decode_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+from flask_jwt_extended import (JWTManager, create_access_token, create_refresh_token, decode_token, jwt_required,
+                                jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 from bson.objectid import ObjectId
 from string_search import Search
-import timeline 
+import timeline
 import sub_timeline
+
 application = Flask(__name__)
 CORS(application)
 api = Api(application)
-application.config.from_mapping(
-    SECRET_KEY='dev',
-)
-application.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
 application.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
 jwt = JWTManager(application)
-mongo = PyMongo(application)
-
 
 parser = reqparse.RequestParser()
 parser.add_argument('user_id')
@@ -58,20 +53,25 @@ def auth(db):
         user = collection.find({'id': user_id})
         return user
 
+
 def db_manager():
     client = MongoClient('mongodb://localhost:27017')
     db = client.pookle
     return db
 
 
-
 class UserList(Resource):
     def get(self):
         db = db_manager()
-        collection = db.users
-        users = dumps(collection.find())
-        MongoClient('mongodb://localhost:27017').close()
-        return users
+        user = auth(db)
+        if user == None:
+            return None
+        if user[0]['rank'] == 10:
+            collection = db.users
+            users = dumps(collection.find())
+            MongoClient('mongodb://localhost:27017').close()
+            return users
+
     def post(self):
         args = parser.parse_args()
         user_id = args['user_id']
@@ -89,14 +89,14 @@ class UserList(Resource):
             "que": user_que,
             "ans": generate_password_hash(user_ans),
             "nickname": user_id,
-            "fav_timeline":[],
-            "fav_board":[],
-            "comment":[],
+            "fav_timeline": [],
+            "fav_board": [],
+            "comment": [],
             "fav_tag": [],
             "black_tag": [],
             "reg_date": datetime.datetime.now(),
             "last_date": datetime.datetime.now(),
-            "rank":0
+            "rank": 0
         }
         collection.insert(user)
         MongoClient('mongodb://localhost:27017').close()
@@ -107,6 +107,7 @@ class UserList(Resource):
             'access_token': access_token,
             'refresh_token': refresh_token
         }
+
 
 class UserDetail(Resource):
     def get(self):
@@ -119,15 +120,16 @@ class UserDetail(Resource):
             json_user = {
                 "_id": dict_user[0]['_id'],
                 "id": dict_user[0]['id'],
-                "nickname" : dict_user[0]['nickname'],
-                "fav_timeline" : dict_user[0]['fav_timeline'],
-                "fav_board" : dict_user[0]['fav_board'],
+                "nickname": dict_user[0]['nickname'],
+                "fav_timeline": dict_user[0]['fav_timeline'],
+                "fav_board": dict_user[0]['fav_board'],
                 "fav_tag": dict_user[0]['fav_tag'],
                 "black_tag": dict_user[0]['black_tag'],
-                "rank":dict_user[0]['rank']
+                "rank": dict_user[0]['rank']
             }
             MongoClient('mongodb://localhost:27017').close()
             return json_user
+
 
 class editNick(Resource):
     def put(self):
@@ -153,8 +155,9 @@ class checkId(Resource):
         user = json.loads(dumps(collection.find({"id": user_id})))
         if user:
             return user[0]
-        else :
+        else:
             return 0
+
 
 class checkQueAns(Resource):
     def post(self):
@@ -163,10 +166,10 @@ class checkQueAns(Resource):
         user_id = args['user_id']
         db = db_manager()
         collection = db.users
-        user = json.loads(dumps(collection.find({"id":user_id})))
-        if  check_password_hash(user[0]['ans'], user_ans):
+        user = json.loads(dumps(collection.find({"id": user_id})))
+        if check_password_hash(user[0]['ans'], user_ans):
             return 1
-        else :
+        else:
             return 0
 
 
@@ -210,7 +213,6 @@ class favriteTag(Resource):
         )
         MongoClient('mongodb://localhost:27017').close()
 
-
     def put(self):
         parser.add_argument('fav_tag')
         args = parser.parse_args()
@@ -223,7 +225,8 @@ class favriteTag(Resource):
             {'$pull': {'fav_tag': fav_tag}}
         )
         MongoClient('mongodb://localhost:27017').close()
-        
+
+
 class BlacklistTag(Resource):
     def post(self):
         parser.add_argument('black_tag')
@@ -237,7 +240,6 @@ class BlacklistTag(Resource):
             {'$push': {'black_tag': black_tag}}
         )
         MongoClient('mongodb://localhost:27017').close()
-
 
     def put(self):
         parser.add_argument('black_tag')
@@ -267,36 +269,37 @@ class FavTimeline(Resource):
         for col in db.collection_names():
             db[col].update(
                 {
-                    "$and":[
+                    "$and": [
                         {'_id': ObjectId(_id)},
-                        {'title':title}
-                        ]
+                        {'title': title}
+                    ]
                 },
-                {'$push':{
+                {'$push': {
                     'fav': {
-                        'user_id':user[0]['_id'],
-                        'user_name':user[0]['id']
-                        }
-                    },
-                 '$inc': {'fav_cnt':1}
+                        'user_id': user[0]['_id'],
+                        'user_name': user[0]['id']
+                    }
+                },
+                    '$inc': {'fav_cnt': 1}
                 }
             )
         db.users.update(
             {'_id': ObjectId(user[0]['_id'])},
-            {'$push':{
-                'fav_timeline':{
-                    '_id':_id,
-                    'title':title,
-                    'date':date
+            {'$push': {
+                'fav_timeline': {
+                    '_id': _id,
+                    'title': title,
+                    'date': date
                 }
             }
-        }
+            }
         )
         ''' for col in db.collection_names():
              target = db[col].find({ "$and":[
                          {'_id': ObjectId(_id)},
                          {'title':title}
                          ]})'''
+
 
 class UnFavTimeline(Resource):
     def put(self):
@@ -317,20 +320,19 @@ class UnFavTimeline(Resource):
                         {'title': title}
                     ]
                 },
-                {'$pull':{
-                    'fav': {'user_id':user[0]['_id']}
+                {'$pull': {
+                    'fav': {'user_id': user[0]['_id']}
                 },
-                 '$inc': {'fav_cnt':-1}
+                    '$inc': {'fav_cnt': -1}
                 }
             )
         db.users.update(
             {'_id': ObjectId(user[0]['_id'])},
-            {'$pull':{
-                'fav_timeline':{'_id':_id}
+            {'$pull': {
+                'fav_timeline': {'_id': _id}
             }
-        }
+            }
         )
-
 
 
 class Login(Resource):
@@ -379,37 +381,44 @@ class TokenRefresh(Resource):
     @jwt_refresh_token_required
     def post(self):
         current_user = get_jwt_identity()
-        access_token = create_access_token(identity = current_user, expires_delta=False)
+        access_token = create_access_token(identity=current_user, expires_delta=False)
         return {'access_token': access_token}
+
 
 class Timeline(Resource):
     def get(self, option):
-        db= db_manager()
+        db = db_manager()
         user = auth(db)
         priority_tag = []
         exclude_tag = []
         if user:
             priority_tag = user[0]['fav_tag']
             exclude_tag = user[0]['black_tag']
-        if option==0:
+        if option == 0:
             list = timeline.View(db, timeline.include_coll, timeline.include_tag, priority_tag, exclude_tag)
         else:
             list = sub_timeline.View(db, sub_timeline.include_coll[option], sub_timeline.include_tag[option], [])
         json_list = dumps(list)
         return json_list
 
+
 class TimelineAdmin(Resource):
     def get(self):
-        db=db_manager()
-        list = dumps(db.admin_post.find().sort([("date", -1), ("_id", 1)]).limit(1)[0])
+        db = db_manager()
+        try:
+            result = db.admin_post.find().sort([("date", -1), ("_id", 1)]).limit(1)[0]
+        except:
+            result = {"contents": "no have notice"}
+        list = dumps(result)
         return list
+
     def post(self):
         args = parser.parse_args()
         title = args['title']
         contents = args['contents']
         client = MongoClient('mongodb://localhost:27017')
         db = client.pookle
-        now= datetime.datetime.now()
+        now = datetime.datetime.now()
         date = now.strftime("%Y-%m-%d %H:%M:%S")
         post = {
             "title": title,
@@ -431,43 +440,6 @@ class TimelineUpdate(Resource):
         db.timeline.remove({'_id': ObjectId(_id)})
         return 0
 
-class renewal_db(Resource):
-    def get(self):
-        client = MongoClient('mongodb://localhost:27017')
-        db = client.pookle
-        db.timeline.remove({})
-        for col in db.collection_names():
-            if(col[0:2] == 'PK'):
-                for document in db[col].find():
-                    db.timeline.insert(document)
-        db.timeline.update(
-            {'fav_cnt':{"$exists":False}},
-            {'$set':{'fav_cnt':0}},
-            upsert=True, multi=True
-        )
-        return 0
-
-class RemoveTimeline(Resource):
-    def get(self):
-        client = MongoClient('mongodb://localhost:27017')
-        db = client.pookle
-        for col in db.collection_names():
-            if(col[0:2] == 'PK'):
-                db[col].remove({})
-        db.recent_date.remove({})
-        db.SEARCH_PK_pknulec_lecture.remove({})
-
-class SearchTimeline(Resource):
-    def get(self):
-        client = MongoClient('mongodb://localhost:27017')
-        db = client.pookle
-        json_list=""
-        for col in db.collection_names():
-            if(col[0:2] == 'PK'):
-                list = dumps(db[col].find({"url":""}))
-                json_list += list
-        return json_list
-
 
 class Board(Resource):
     def get(self):
@@ -475,16 +447,19 @@ class Board(Resource):
         db = client.pookle
         collection = db.board
         board_posts = dumps(collection.find().sort([("date", -1), ("_id", 1)]).limit(20))
-        before_data =  json.loads(board_posts)
+        before_data = json.loads(board_posts)
         for data in before_data:
-            data_ = json.loads(dumps(db.users.find({"_id":ObjectId(data['author']['$oid'])},{"nickname":1,"_id":0})))
+            data_ = json.loads(
+                dumps(db.users.find({"_id": ObjectId(data['author']['$oid'])}, {"nickname": 1, "_id": 0})))
             data['author'] = data_[0]['nickname']
             for comment_data in data['comment']:
-                user_nick = json.loads(dumps(db.users.find({"_id":ObjectId(comment_data['_id']['$oid'])},{"nickname":1,"_id":0})))
+                user_nick = json.loads(
+                    dumps(db.users.find({"_id": ObjectId(comment_data['_id']['$oid'])}, {"nickname": 1, "_id": 0})))
                 comment_data['author'] = user_nick[0]['nickname']
         client.close()
         after_data = dumps(before_data)
         return after_data
+
     def post(self):
         args = parser.parse_args()
         contents = args['contents']
@@ -492,24 +467,25 @@ class Board(Resource):
         db = client.pookle
         collection = db.board
         if dumps(db.board.find()) != "[]":
-            count =  json.loads(dumps(db.board.aggregate([{"$match":{}}, {"$count":"cnt"}])))[0]['cnt']
+            count = json.loads(dumps(db.board.aggregate([{"$match": {}}, {"$count": "cnt"}])))[0]['cnt']
         else:
-            count=0
-        while count>1000:
+            count = 0
+        while count > 1000:
             recent = json.loads(dumps(collection.find().sort([("date", 1), ("_id", 1)]).limit(1)))[0]['_id']['$oid']
-            collection.remove({"_id":ObjectId(recent)})
+            collection.remove({"_id": ObjectId(recent)})
             count = json.loads(dumps(db.board.aggregate([{"$match": {}}, {"$count": "cnt"}])))[0]['cnt']
         user = auth(db)
         post = {
             "author": user[0]['_id'],
             "contents": contents,
-            "fav_cnt":0,
-            "comment":[],
-            "date":datetime.datetime.now()
+            "fav_cnt": 0,
+            "comment": [],
+            "date": datetime.datetime.now()
         }
         db.board.insert(post)
         client.close()
         return 0
+
     def delete(self):
         args = request.args
         id = args['id']
@@ -518,6 +494,7 @@ class Board(Resource):
         db.board.remove({'_id': ObjectId(id)})
         client.close()
         return 0
+
 
 class Comment(Resource):
     def post(self):
@@ -528,18 +505,19 @@ class Comment(Resource):
         db = client.pookle
         user = auth(db)
         db.board.update(
-            {"_id":ObjectId(_id) },
-            {"$push":{
-                "comment":{
-                    "_id":user[0]['_id'],
+            {"_id": ObjectId(_id)},
+            {"$push": {
+                "comment": {
+                    "_id": user[0]['_id'],
                     "contents": contents,
-                    "date":datetime.datetime.now()
+                    "date": datetime.datetime.now()
                 }
             }
             }
         )
         client.close()
         return 0
+
     def put(self):
         args = parser.parse_args()
         type = args['type']
@@ -551,7 +529,7 @@ class Comment(Resource):
             db.board.update(
                 {'_id': ObjectId(post_id)},
                 {'$pull': {
-                    "comment":{
+                    "comment": {
                         '_id': ObjectId(comment_id)
                     }
                 }
@@ -559,6 +537,7 @@ class Comment(Resource):
             )
         client.close()
         return 0
+
 
 class FavBoard(Resource):
     def put(self):
@@ -592,6 +571,7 @@ class FavBoard(Resource):
         )
         return 0
 
+
 class UnFavBoard(Resource):
     def put(self):
         parser.add_argument('$oid')
@@ -601,19 +581,20 @@ class UnFavBoard(Resource):
         user = auth(db)
         db.board.update(
             {'_id': ObjectId(_id)},
-            {'$pull':{
-                'fav': {'user_id':user[0]['_id']}
+            {'$pull': {
+                'fav': {'user_id': user[0]['_id']}
             },
-             '$inc': {'fav_cnt':-1}
+                '$inc': {'fav_cnt': -1}
             }
         )
         db.users.update(
             {'_id': ObjectId(user[0]['_id'])},
-            {'$pull':{
-                'fav_board':{'_id':_id}
+            {'$pull': {
+                'fav_board': {'_id': _id}
             }
-        }
+            }
         )
+
 
 class WordSearch(Resource):
     def post(self):
@@ -624,12 +605,19 @@ class WordSearch(Resource):
         json_list = dumps(list)
         return json_list
 
+
 class Advertise(Resource):
     def get(self):
-        db=db_manager()
-        list=dumps(db.advertise.find().limit(1)[0])
-        print(list)
+        db = db_manager()
+        try:
+            result = db.advertise.find().limit(1)[0]
+        except:
+            result = {
+                'contents': "no have advertise"
+            }
+        list = dumps(result)
         return list
+
     def post(self):
         print('hi')
         args = parser.parse_args()
@@ -652,16 +640,16 @@ class Advertise(Resource):
         db.advertise.insert(adv)
         return 0
 
+
 api.add_resource(UserList, '/users')
-api.add_resource(UserDetail,'/user')
-api.add_resource(editNick,'/user/nick')
+api.add_resource(UserDetail, '/user')
+api.add_resource(editNick, '/user/nick')
 api.add_resource(changePasswd, '/user/pw')
 api.add_resource(favriteTag, '/user/fav-tag')
 api.add_resource(BlacklistTag, '/user/black-tag')
 api.add_resource(Login, '/user/login')
 api.add_resource(checkId, '/user/check-id')
 api.add_resource(checkQueAns, '/user/check-que-ans')
-
 
 api.add_resource(Auth, '/auth')
 
@@ -677,12 +665,7 @@ api.add_resource(Comment, '/board/comment')
 api.add_resource(FavBoard, '/board/fav')
 api.add_resource(UnFavBoard, '/board/un-fav')
 
-
 api.add_resource(WordSearch, '/search')
 
-
-api.add_resource(RemoveTimeline,'/remove-timeline')
-api.add_resource(SearchTimeline,'/search-timeline')
-api.add_resource(renewal_db,'/renewal')
 if __name__ == '__main__':
     application.run(debug=True, host='0.0.0.0')

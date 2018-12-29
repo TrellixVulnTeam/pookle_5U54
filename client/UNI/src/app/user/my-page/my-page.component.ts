@@ -36,22 +36,27 @@ export class MyPageComponent implements OnInit {
   getUserDetail(){
     this.uniService.getUserDetail().subscribe(
       response => {
-        this.profile_data={
-          id:response.id,
-          nickname:response.nickname,
-        };
-        this.timeline_data = response.fav_timeline;
-        let timeline_len = this.timeline_data.length;
-        for(let i=0;i<timeline_len;i++){
-          this.timeline_data[i].date = this.timeConverter(this.timeline_data[i].date);
+        if(response){
+          this.profile_data={
+            id:response.id,
+            nickname:response.nickname,
+          };
+          this.timeline_data = response.fav_timeline;
+          let timeline_len = this.timeline_data.length;
+          for(let i=0;i<timeline_len;i++){
+            this.timeline_data[i].date = this.timeConverter(this.timeline_data[i].date);
+          }
+          this.board_data = response.fav_board;
+          let board_len = this.board_data.length;
+          for(let i=0;i<board_len;i++){
+            this.board_data[i].date = this.board_timeConverter(this.board_data[i].date.$date);
+          }
+          this.tag_data = response.fav_tag;
+          this.black_tag = response.black_tag;
+        }else{
+          alert("잘못된 접근입니다!");
+          location.href="/";
         }
-        this.board_data = response.fav_board;
-        let board_len = this.board_data.length;
-        for(let i=0;i<board_len;i++){
-          this.board_data[i].date = this.board_timeConverter(this.board_data[i].date.$date);
-        }
-        this.tag_data = response.fav_tag;
-        this.black_tag = response.black_tag;
       },   
       error => console.log('이건 에러야 !!error', error)
     );

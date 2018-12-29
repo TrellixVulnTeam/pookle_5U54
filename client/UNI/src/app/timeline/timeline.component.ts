@@ -59,7 +59,6 @@ export class TimelineComponent implements OnInit {
     }else{
       this.is_auth=false;
     }       
-    this.getAdvertise();
     this.getAdminPost();
     this.getList();
     
@@ -197,9 +196,11 @@ export class TimelineComponent implements OnInit {
   getAdvertise(){
     this.uniService.getAdvertise().subscribe(
       response => {
-        this.advertise_post = JSON.parse(response);
-        console.log(this.advertise_post);
-        this.getList();
+        if(response){
+          this.advertise_post = JSON.parse(response);
+          console.log(this.advertise_post);
+          this.getList();
+        }
       },
       error => console.log('error',error)
     );
@@ -209,6 +210,8 @@ export class TimelineComponent implements OnInit {
   getAdminPost(){
     this.uniService.getAdminPost().subscribe(
       response => {
+        if(response){
+          console.log(response);
           this.admin_post = JSON.parse(response);
           this.admin_post.isFull = true;
           this.admin_post.date = this.timeConverter(this.admin_post.date);
@@ -216,6 +219,7 @@ export class TimelineComponent implements OnInit {
             this.admin_post.post= this.admin_post.post.slice(0,175);
             this.admin_post.isFull = false;
           }
+        }
       },
       error => console.log('이건 에러야 !!error', error)
     );
