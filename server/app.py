@@ -209,7 +209,7 @@ class favriteTag(Resource):
         user = auth(db)
         collection.update(
             {'id': user[0]['id']},
-            {'$push': {'fav_tag': fav_tag}}
+            {'$addToSet': {'fav_tag': fav_tag}}
         )
         MongoClient('mongodb://localhost:27017').close()
 
