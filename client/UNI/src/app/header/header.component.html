@@ -4,7 +4,7 @@
     <div class="container-fluid fixed-top">
       <div [@slideInOut]="animationState" class="row">
         <div class="col-sm-12 text-center">
-            <a class="navbar-brand banner" routerLink="/">PooKle</a>
+            <a class="navbar-brand banner" routerLink="/" (click)="clear()">PooKle</a>
            <!-- <a *ngIf="is_auth" class="navbar-brand banner" routerLink="/timeline">PooKle</a>-->
             
         </div>

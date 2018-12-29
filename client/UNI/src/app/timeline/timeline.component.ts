@@ -211,12 +211,15 @@ export class TimelineComponent implements OnInit {
     this.uniService.getAdminPost().subscribe(
       response => {
         if(response){
-          console.log(response);
           this.admin_post = JSON.parse(response);
           this.admin_post.isFull = true;
           this.admin_post.date = this.timeConverter(this.admin_post.date);
-          if(this.admin_post.post.length>175 && !this.isFull){
-            this.admin_post.post= this.admin_post.post.slice(0,175);
+          if(this.admin_post.post.length>50 && !this.isFull){
+            if(this.isCategory){
+              this.admin_post.post= this.admin_post.post.slice(0,35);
+            }else{
+              this.admin_post.post= this.admin_post.post.slice(0,50);
+            }
             this.admin_post.isFull = false;
           }
         }
@@ -232,8 +235,10 @@ export class TimelineComponent implements OnInit {
   getList(option:number=0){
     window.scrollTo(0, 0);
     this.posts='';
-    if(window.location.pathname=='/timeline' || option >=1){
-      this.router.navigate(['/timeline/']);
+    let real_href = window.location.href.split('/');
+    let last_href = real_href[real_href.length-1];
+    if(last_href=='timeline' || option >=1){
+      this.router.navigate(['/timeline']);
       if(localStorage.getItem('token')){
       this.uniService.getUserDetail().subscribe(
         response => {
@@ -260,7 +265,7 @@ export class TimelineComponent implements OnInit {
           }else if(this.posts[i].post == 1 || this.posts[i].post == ""){
             this.posts[i].post = "[System]링크를 눌러서 확인해보세요!"
           }
-          this.posts[i].date = this.timeConverter(this.posts[i].date);
+          this.posts[i].after_date = this.timeConverter(this.posts[i].date);
           this.isFavorite[i]= false;
           if(this.posts[i].fav_cnt>=10000){
             this.posts[i].fav_cnt-=10000;
@@ -375,7 +380,7 @@ export class TimelineComponent implements OnInit {
     }
   }
   search_tag(tag){
-    location.href='/timeline/'+tag;
+    location.href='/#/timeline/'+tag;
   }
 
 }

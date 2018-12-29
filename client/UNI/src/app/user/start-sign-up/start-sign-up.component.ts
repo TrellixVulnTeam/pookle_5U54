@@ -36,7 +36,7 @@ export class StartSignUpComponent implements OnInit {
         }else{
           alert("가입이 완료되었습니다.");
           localStorage.setItem('token', response.access_token);
-          location.href = "/timeline"; 
+          location.href = "/#/timeline"; 
         }
       },
       error => console.log('이건 에러야 !!error', error)

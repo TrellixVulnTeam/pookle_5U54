@@ -16,9 +16,13 @@ export class TimelineFavComponent implements OnInit {
     
   }
   unFav(i:number){
+    let postData = {
+      id:this.data[i]._id.$oid,
+      title:this.data[i].title,
+      date:this.data[i].date
+    }
     let id = {$oid: this.data[i]._id};
-    console.log(id);
-    this.uniService.unFavTimeline(id).subscribe(
+    this.uniService.unFavTimeline(postData).subscribe(
       response => {
         this.data.splice(i,1);
       },

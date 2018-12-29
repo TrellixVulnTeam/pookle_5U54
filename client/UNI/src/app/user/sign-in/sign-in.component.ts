@@ -26,8 +26,7 @@ export class SignInComponent implements OnInit {
     }
     this.uniService.signIn(this.userData).subscribe(
       response => {
-        console.log("@");
-        console.log(response);
+
       },
       error => console.log('error', error)
     );

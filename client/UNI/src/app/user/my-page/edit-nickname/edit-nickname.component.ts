@@ -17,7 +17,6 @@ export class EditNicknameComponent implements OnInit {
   ngOnInit() {
   }
   edit(){
-    console.log(this.editNicknameForm.value);
   }
 
 }

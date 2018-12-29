@@ -18,7 +18,7 @@ export class UniService {
     private http: HttpClient,
   ) { 
   }
-  url = "https://121.145.54.15:5000"
+  url = "http://121.145.54.15:5000"
   //url = "http://127.0.0.1:5000"
 
   registerNewUser(userData): Observable<any>{

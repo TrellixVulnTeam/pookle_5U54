@@ -19,7 +19,7 @@ export class UserlistComponent implements OnInit {
       response => {
        if(!response || response.rank!=10){
           alert("잘못된 접근입니다!");
-          location.href = "/";
+          location.href = "/#/";
       }else{
         this.uniService.loadUserList().subscribe(
           response =>{

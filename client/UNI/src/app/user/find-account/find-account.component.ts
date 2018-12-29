@@ -21,7 +21,6 @@ export class FindAccountComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.activePane);
   }
   move(){
     this.first = false;

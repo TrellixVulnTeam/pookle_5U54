@@ -30,6 +30,9 @@ export class HeaderComponent implements OnInit {
     }
 
   }
+  clear(){
+    this.searchForm.reset();
+  }
   @HostListener('window:scroll', ['$event']) onScrollEvent($event){
     if(window.pageYOffset>=110){
       this.animationState='out';
@@ -42,13 +45,13 @@ export class HeaderComponent implements OnInit {
     let word = this.searchForm.value.word;
     let split_word = word.split(" ");
     let swi=0;
-    console.log(split_word);
     for(let i=0;i<split_word.length;i++){
       if(split_word[i].length==1)
         swi=1;
     }
     if(swi==0){
-    location.href='/timeline/'+this.searchForm.value.word;
+    location.href='/#/timeline/'+this.searchForm.value.word;
+    location.reload();
     //this.router.navigate(['/timeline/'+this.searchForm.value.word]);
     }else{
       alert("두 글자 이상 입력해주세요!");

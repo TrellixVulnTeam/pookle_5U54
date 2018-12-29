@@ -46,13 +46,17 @@ export class BoardComponent implements OnInit {
     }
   }
   write(content){
+    this.writeForm.reset();
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      
     }, (reason) => {
     });
   }
 
   collapsed(ind:number){
     this.isCollapsed[ind] = !this.isCollapsed[ind];
+    this.comment_writeForm.reset();
+
   }
   
   close(){
@@ -67,6 +71,7 @@ export class BoardComponent implements OnInit {
       error => console.log('error',error)
     );
     this.modalService.dismissAll();
+
   }
 
   comment_send(ind:number){
@@ -104,7 +109,8 @@ export class BoardComponent implements OnInit {
           this.user = {
             user_id:response._id,
             user_uid:response.id,
-            user_rank:response.rank
+            user_rank:response.rank,
+            user_nick:response.nickname
           }
           if(this.user.user_rank==10){
             this.isAdmin=true;

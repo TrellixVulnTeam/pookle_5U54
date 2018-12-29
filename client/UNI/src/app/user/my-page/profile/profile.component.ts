@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
   }
   logout(){
     localStorage.removeItem('token');
-    location.href = "/timeline";
+    location.href = "/";
   }
   editNick(content){
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {

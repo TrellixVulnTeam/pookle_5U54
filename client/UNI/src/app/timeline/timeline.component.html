@@ -63,18 +63,18 @@
 
 
     <div *ngFor="let post of small_posts; index as i" class="post">
-        <a *ngIf="post.url" href="{{post.url}}" class="link-btn" >
-            <div class="block" *ngIf="post.title">
-                <a href="{{post.url}}" class="title">{{post.title}}</a>
+        <a *ngIf="post.url"  target="_blank" href="{{post.url}}" class="link-btn" >
+            <div class="block"  *ngIf="post.title">
+                <a  target="_blank" href="{{post.url}}" class="title">{{post.title}}</a>
             </div>
 
-            <span class="time" *ngIf="!post.adv">{{post.date}}</span>
+            <span class="time" *ngIf="!post.adv">{{post.after_date}}</span>
             <p class="content" *ngIf="post.post || post.contents ">{{post.post}}</p>
             <img *ngIf="post.adv" src="{{post.img}}"/>
         </a>
         <a *ngIf="!post.url"class="link-btn" >
                 <div class="block" *ngIf="post.title">
-                    <a href="{{post.url}}" class="title">{{post.title}}</a>
+                    <a href="{{post.url}}"  target="_blank" class="title">{{post.title}}</a>
                 </div>
     
                 <span class="time" *ngIf="!post.adv">{{post.date}}</span>

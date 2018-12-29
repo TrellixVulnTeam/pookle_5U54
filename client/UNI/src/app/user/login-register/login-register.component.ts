@@ -85,7 +85,7 @@ export class LoginRegisterComponent implements OnInit {
       response => {
         if(response){
           localStorage.setItem('token', response.access_token);
-          location.href = "/timeline"; 
+          location.href = "/"; 
         }else{
           alert("아이디나 패스워드를 확인해주세요.");
         }
@@ -110,7 +110,7 @@ export class LoginRegisterComponent implements OnInit {
           }else{
             alert("가입이 완료되었습니다.");
             localStorage.setItem('token', response.access_token);
-            location.href = "/timeline"; 
+            location.href = "/#/timeline"; 
           }
         },
         error => console.log('이건 에러야 !!error', error)
@@ -121,7 +121,6 @@ export class LoginRegisterComponent implements OnInit {
   }
   checkAccount(){
     this.id = this.checkAccountForm.value.user_id;
-    console.log(this.checkAccountForm.value);
     this.uniService.checkUserId(this.checkAccountForm.value).subscribe(
       response => {
         if(response){
@@ -163,10 +162,8 @@ export class LoginRegisterComponent implements OnInit {
       user_ans:this.checkQuestionForm.value.user_ans,
       user_id:this.id
     }
-    console.log(postData.user_id);
     this.uniService.checkQueAns(postData).subscribe(
       response => {
-        console.log(response);
         if(response){
           this.move();
           this.display_grade3 = false;

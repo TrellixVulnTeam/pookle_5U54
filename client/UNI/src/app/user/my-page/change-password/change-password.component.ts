@@ -22,7 +22,6 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
   }
   pw_check(){
-    console.log(this.pwCheckForm.value);
   }
   pw_change(){
     

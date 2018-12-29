@@ -15,7 +15,6 @@ export class BoardFavComponent implements OnInit {
   }
   unFav(i:number){
     let id = {$oid: this.data[i]._id};
-    console.log(id);
     this.uniService.unFavBoard(id).subscribe(
       response => {
         this.data.splice(i,1);

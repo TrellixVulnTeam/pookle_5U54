@@ -55,7 +55,7 @@ export class MyPageComponent implements OnInit {
           this.black_tag = response.black_tag;
         }else{
           alert("잘못된 접근입니다!");
-          location.href="/";
+          location.href="/#/";
         }
       },   
       error => console.log('이건 에러야 !!error', error)
