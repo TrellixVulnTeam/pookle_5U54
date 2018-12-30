@@ -8,8 +8,8 @@
     <div *ngFor="let post of small_posts; index as i" class="post">
         <h3 class="nickname">{{post.author}}</h3>
         <span class="time">&nbsp;{{post.date}}</span>
-        <button class="delete float-right" *ngIf="post.author==user.user_nick || isAdmin" (click)="delete_post(i)">X</button>
-        <button class="delete float-right" *ngIf="post.author==user.user_nick || isAdmin" (click)="delete_post(i)"><span class="fas fa-pencil-alt"></span></button>
+        <button class="delete float-right" *ngIf="user && post.author==user.user_nick || isAdmin" (click)="delete_post(i)">X</button>
+        <button class="delete float-right" *ngIf="user && post.author==user.user_nick || isAdmin" (click)="delete_post(i)"><span class="fas fa-pencil-alt"></span></button>
 
         <div class="post-contents">{{post.contents}}</div>
         <div class="comment-div">
@@ -27,10 +27,10 @@
                     <span class="name">{{comment.author}}</span>
                     &nbsp;{{comment.contents}}
                     <span class="text-muted">{{comment.date}}</span>
-                    <button class="delete float-right" *ngIf="comment.author==user.user_nick || isAdmin"  (click)="delete_comment(i,j)">X</button>
+                    <button class="delete float-right" *ngIf="user && comment.author==user.user_nick || isAdmin"  (click)="delete_comment(i,j)">X</button>
                 </div>
                 <form [formGroup]="comment_writeForm" (ngSubmit)="comment_send(i)">
-                    <input class="comment-textarea" formControlName="contents" type="textarea" placeholder="댓글을 입력해주세요." style="width:430px; margin:3px 0px">
+                    <input class="comment-textarea" formControlName="contents" type="textarea" placeholder="댓글을 입력해주세요.">
                     <button type="submit"> <span class="fas fa-comment"></span></button>
                 </form>
             </div>

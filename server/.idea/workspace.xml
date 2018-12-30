@@ -2,17 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db6a028f-afd4-4050-85e9-90877366dc1a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../PKU_Crawler" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/board/board.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/board/board.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/board/board.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/board/board.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/board/board.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/board/board.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/timeline/timeline.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/timeline/timeline.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/timeline/timeline.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/timeline/timeline.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/start/start.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/start/start.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/timeline/timeline.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/timeline/timeline.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/uni-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/uni-routing.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/uni.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/uni.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/user/login-register/login-register.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/user/login-register/login-register.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/user/login-register/login-register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/user/login-register/login-register.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/user/my-page/change-password/change-password.component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/user/my-page/change-password/change-password.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/user/my-page/change-password/change-password.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/user/my-page/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/UNI/src/app/user/my-page/profile/profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/user/sign-in/sign-in.component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/user/sign-in/sign-in.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/UNI/src/app/user/sign-in/sign-in.component.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/string_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/string_search.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,19 +31,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="342" column="29" lean-forward="true" selection-start-line="342" selection-start-column="29" selection-end-line="342" selection-end-column="29" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="4093">
+              <caret line="322" column="14" selection-start-line="322" selection-start-column="14" selection-end-line="322" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file leaf-file-name="timeline.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/timeline.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="2128">
@@ -74,6 +82,7 @@
       <find>date</find>
       <find>request</find>
       <find>datetime</find>
+      <find>favtime</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -144,27 +153,29 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13541667" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.06638567" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49893162" weight="0.39180326" />
-      <window_info anchor="bottom" id="Python Console" order="8" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50106835" side_tool="true" weight="0.33483145" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Python Console" order="8" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.49893162" visible="true" weight="0.27699018" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -177,6 +188,40 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6650">
+          <caret line="350" column="28" selection-start-line="350" selection-start-column="28" selection-end-line="350" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timeline.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2185">
+          <caret line="115" column="18" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6251">
+          <caret line="342" column="29" lean-forward="true" selection-start-line="342" selection-start-column="29" selection-end-line="342" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timeline.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2128">
+          <caret line="115" column="18" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/string_search.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -190,11 +235,8 @@
     <entry file="file://$PROJECT_DIR$/sub_timeline.py" />
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="342" column="29" lean-forward="true" selection-start-line="342" selection-start-column="29" selection-end-line="342" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="4093">
+          <caret line="322" column="14" selection-start-line="322" selection-start-column="14" selection-end-line="322" selection-end-column="14" />
         </state>
       </provider>
     </entry>

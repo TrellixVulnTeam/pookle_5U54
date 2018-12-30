@@ -260,10 +260,12 @@ class FavTimeline(Resource):
         parser.add_argument('title')
         parser.add_argument('date')
         parser.add_argument('id')
+        parser.add_argument('url')
         args = parser.parse_args()
         _id = args['id']
         title = args['title']
         date = args['date']
+        url = args['url']
         db = db_manager()
         user = auth(db)
         for col in db.collection_names():
@@ -289,6 +291,7 @@ class FavTimeline(Resource):
                 'fav_timeline': {
                     '_id': _id,
                     'title': title,
+                    'url': url,
                     'date': date
                 }
             }

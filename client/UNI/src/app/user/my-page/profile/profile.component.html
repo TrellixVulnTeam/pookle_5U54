@@ -21,10 +21,10 @@
   </div>
   <form [formGroup]="nicknameForm" (ngSubmit)="edit()">
   <div class="modal-body">
-      <input id="nickname" class="form-control" formControlName="nickname" placeholder="별명을 입력해주세요.">
+      <input id="nickname" class="form-control" formControlName="nickname" placeholder="별명을 입력해주세요." required>
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-outline-dark">변경</button>
+    <button type="submit" class="btn btn-outline-dark"  [disabled]="!nicknameForm.valid">변경</button>
   </div>
 </form>
 </ng-template>

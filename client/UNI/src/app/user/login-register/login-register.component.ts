@@ -64,6 +64,9 @@ export class LoginRegisterComponent implements OnInit {
   }
 
   open(content) {
+    this.checkAccountForm.reset();
+    this.checkQuestionForm.reset();
+    this.resetPasswdForm.reset();
     this.display_grade=true;
     this.display_grade2=true;
     this.display_grade3=true;
@@ -92,7 +95,6 @@ export class LoginRegisterComponent implements OnInit {
       },
       error => console.log('error', error)
     );
-
   }
 
   registerNewUser(){
@@ -110,7 +112,7 @@ export class LoginRegisterComponent implements OnInit {
           }else{
             alert("가입이 완료되었습니다.");
             localStorage.setItem('token', response.access_token);
-            location.href = "/#/timeline"; 
+            location.href = "/"; 
           }
         },
         error => console.log('이건 에러야 !!error', error)
@@ -196,5 +198,9 @@ export class LoginRegisterComponent implements OnInit {
       );
     }
     this.resetPasswdForm.reset();
+  }
+  clear(){
+    this.signInForm.reset();
+    this.signUpForm.reset();
   }
 }

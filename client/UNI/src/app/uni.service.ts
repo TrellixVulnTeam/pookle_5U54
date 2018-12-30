@@ -18,8 +18,8 @@ export class UniService {
     private http: HttpClient,
   ) { 
   }
-  url = "http://121.145.54.15:5000"
-  //url = "http://127.0.0.1:5000"
+  //url = "http://121.145.54.15:5000"
+  url = "http://127.0.0.1:5000"
 
   registerNewUser(userData): Observable<any>{
     return this.http.post(this.url+'/users', userData)

@@ -24,6 +24,7 @@ export class StartComponent implements OnInit {
   });
   model:User;
   ngOnInit() {
+    this.signUpForm.reset();
     if(localStorage.getItem('token')){
       this.is_auth=true;
     }else{

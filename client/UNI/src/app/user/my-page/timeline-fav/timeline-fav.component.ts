@@ -17,8 +17,9 @@ export class TimelineFavComponent implements OnInit {
   }
   unFav(i:number){
     let postData = {
-      id:this.data[i]._id.$oid,
+      id:this.data[i]._id,
       title:this.data[i].title,
+      url:this.data[i].url,
       date:this.data[i].date
     }
     let id = {$oid: this.data[i]._id};

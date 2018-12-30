@@ -3,7 +3,7 @@
 
   <ngb-tabset>
     <ngb-tab >
-      <ng-template class="tab-title" ngbTabTitle><b>로그인</b></ng-template>
+      <ng-template class="tab-title"  ngbTabTitle><b (click)="clear()">로그인</b></ng-template>
       <ng-template ngbTabContent>
         <div class="row">
           <div class="col-sm sign-in">
@@ -24,7 +24,7 @@
       </ng-template>
     </ngb-tab>
     <ngb-tab>
-      <ng-template class="tab-title" ngbTabTitle><b>회원가입</b></ng-template>
+      <ng-template class="tab-title"  ngbTabTitle><b (click)="clear()">회원가입</b></ng-template>
       <ng-template ngbTabContent>
         <div class="col-sm sign-up">
             <form  [formGroup]="signUpForm" (ngSubmit)="registerNewUser()">

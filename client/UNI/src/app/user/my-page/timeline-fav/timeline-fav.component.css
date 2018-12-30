@@ -27,6 +27,18 @@
     border-bottom:1px solid #DDDDDD;
     margin-bottom:10px;
 }
+.link{
+    color:black;
+
+}
+.link:hover{
+    text-decoration: none;
+    background-color:#DDDDDD;
+    -webkit-transition: background-color 500ms linear;
+    -ms-transition: background-color 500ms linear;
+    transition: background-color 500ms linear;
+}
+
 .more-btn{
     display: block;
     width:90%;

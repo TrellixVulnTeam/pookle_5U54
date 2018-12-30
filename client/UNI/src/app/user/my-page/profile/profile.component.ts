@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { UniService } from '../../../uni.Service';
 
 @Component({
@@ -13,12 +13,12 @@ export class ProfileComponent implements OnInit {
   @Output() nickname:EventEmitter<any> = new EventEmitter();
 
   nicknameForm = this.fb.group({
-    nickname:['']
+    nickname:['', Validators.required]
   })
   passwdChangeForm = this.fb.group({
-    old_pw:[''],
-    new_pw:[''],
-    new_pwc:[''],
+    old_pw:['', Validators.required, Validators.pattern('^[^ \t\r\n\v\f]$')],
+    new_pw:['', Validators.required],
+    new_pwc:['', Validators.required],
   })
   constructor(private modalService: NgbModal, private fb: FormBuilder,
     private uniService: UniService) { 
@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
     location.href = "/";
   }
   editNick(content){
+    this.nicknameForm.reset();
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
     }, (reason) => {
     });
@@ -64,6 +65,7 @@ export class ProfileComponent implements OnInit {
   }
   
   changePasswd(content){
+    this.passwdChangeForm.reset();
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
     }, (reason) => {
     });

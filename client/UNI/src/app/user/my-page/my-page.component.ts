@@ -44,7 +44,7 @@ export class MyPageComponent implements OnInit {
           this.timeline_data = response.fav_timeline;
           let timeline_len = this.timeline_data.length;
           for(let i=0;i<timeline_len;i++){
-            this.timeline_data[i].date = this.timeConverter(this.timeline_data[i].date);
+            this.timeline_data[i].after_date = this.timeConverter(this.timeline_data[i].date);
           }
           this.board_data = response.fav_board;
           let board_len = this.board_data.length;

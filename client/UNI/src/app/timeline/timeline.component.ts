@@ -127,6 +127,7 @@ export class TimelineComponent implements OnInit {
       let postData = {
         id:this.posts[ind]._id.$oid,
         title:this.posts[ind].title,
+        url:this.posts[ind].url,
         date:this.posts[ind].date
       }
       if(this.isFavorite[ind]){
@@ -152,12 +153,13 @@ export class TimelineComponent implements OnInit {
     
   }
   write(content){
+    this.writeForm.reset();
+    this.advertiseForm.reset();
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
     }, (reason) => {
     });
   }
   send(){
-    console.log(this.writeForm.value);
     this.uniService.writePost(this.writeForm.value).subscribe(
       response => {
         this.getList();

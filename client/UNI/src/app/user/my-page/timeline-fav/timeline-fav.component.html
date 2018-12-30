@@ -2,13 +2,14 @@
     <h2>좋아요 표시한 글 - 타임라인</h2>
     <div class="fav-box">
       <div *ngFor="let post of data; index as i" class="row">
-        <div class="col-10">
-          <strong>{{post.title}}</strong><br>
-          <span class="small-font">{{post.date}}</span>
-        </div>
-        <div class="col-2">
-            <button class="delete_btn" (click)="unFav(i)"><i class="far fa-times-circle red"></i></button>
-        </div>
+          <a class="col-10 link"  href="{{post.url}}" target="_blank">
+            <strong>{{post.title}}</strong><br>
+            <span class="small-font">{{post.after_date}}</span>
+            </a>
+          <div class="col-2">
+              <button class="delete_btn" (click)="unFav(i)"><i class="far fa-times-circle red"></i></button>
+          </div>
+        
       </div>
   </div>
   <button class="more-btn">더 보기..</button>

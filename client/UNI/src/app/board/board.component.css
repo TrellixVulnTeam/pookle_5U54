@@ -100,7 +100,10 @@
     border-radius: 5px;
     background-color: rgb(240, 240, 240);
 }
-
+.comment-textarea{
+    width:90%; 
+    margin:3px 0px;
+}
 .delete{
     display: inline-block;
     background-color:transparent;
@@ -127,6 +130,9 @@
   @media (max-width: 992px) {
     .container {
       width: 600px;
+    }
+    .comment-textarea{
+        width:70%; 
     }
 }
 @media (max-width: 576px) {
