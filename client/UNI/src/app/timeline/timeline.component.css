@@ -27,7 +27,6 @@
     padding-left:10px;
     display: block;
     width:40%;
-    height:1000px;
     background-color:#313539;
     border-radius:15px;
 }
@@ -60,7 +59,7 @@
 
 
   
-@media (max-width: 2400px) {
+
     .container {
       width: 100%;
     }
@@ -75,6 +74,8 @@
         padding-top:5px;
         border-radius:10px;
         background-color:#313539;
+        height:100%;
+
     }
     .main{
         background-color:white;
@@ -113,7 +114,7 @@
         text-decoration: underline;
     }
 
-}
+
 @media (max-width: 576px) {
     .container {
       width: 100%;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user/user';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { UniService } from '../uni.Service';
 import { Router,ActivatedRoute } from '@angular/router';
 @Component({
@@ -17,10 +17,10 @@ export class StartComponent implements OnInit {
   userData;
   is_auth:boolean;
   signUpForm = this.fb.group({
-    id: [''],
-    pw: [''],
-    pwc: [''],
-    email: [''],
+    id: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
+    pw: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
+    pwc: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
+    email: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
   });
   model:User;
   ngOnInit() {

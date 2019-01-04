@@ -16,7 +16,7 @@
                   <span>비밀 번호 : </span> 
                   <input type="password" width="80px" class="form-control" formControlName="user_pw">
                 </div>
-                <button type="submit" class="btn btn-secondary">로그인</button><br>  
+                <button type="submit" class="btn btn-secondary" [disabled]="!signInForm.valid">로그인</button><br>  
                 <a class="text-muted small" (click)="open(content)">계정이나 비밀번호를 잊으셨나요?</a>        
               </form>
           </div>
@@ -54,7 +54,7 @@
                 </select>
                 <input id="signupPassworquestion" type="text" maxlength="25" class="form-control" formControlName="user_ans">
                 </div>
-              <button type="submit" class="btn btn-secondary">가입</button>          
+              <button type="submit" class="btn btn-secondary" [disabled]="!signUpForm.valid">가입</button>          
             </form>
           </div>
       </ng-template>

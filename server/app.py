@@ -80,7 +80,7 @@ class UserList(Resource):
         user_ans = args['user_ans']
         db = db_manager()
         collection = db.users
-        duplicate = dumps(collection.find({"user_id": user_id}))[1]
+        duplicate = dumps(collection.find({"id": user_id}))[1]
         if duplicate == '{':
             return "Duplicate accounts"
         user = {
@@ -208,6 +208,10 @@ class favriteTag(Resource):
         collection = db.users
         user = auth(db)
         collection.update(
+            {'id':user[0]['id']},
+            {'$pull':{'black_tag':fav_tag}}
+        )
+        collection.update(
             {'id': user[0]['id']},
             {'$addToSet': {'fav_tag': fav_tag}}
         )
@@ -235,6 +239,10 @@ class BlacklistTag(Resource):
         db = db_manager()
         collection = db.users
         user = auth(db)
+        collection.update(
+            {'id':user[0]['id']},
+            {'$pull':{'fav_tag':black_tag}}
+        )
         collection.update(
             {'id': user[0]['id']},
             {'$push': {'black_tag': black_tag}}
@@ -269,22 +277,23 @@ class FavTimeline(Resource):
         db = db_manager()
         user = auth(db)
         for col in db.collection_names():
-            db[col].update(
-                {
-                    "$and": [
-                        {'_id': ObjectId(_id)},
-                        {'title': title}
-                    ]
-                },
-                {'$push': {
-                    'fav': {
-                        'user_id': user[0]['_id'],
-                        'user_name': user[0]['id']
+            if col[0:2] == "PK":
+                db[col].update(
+                    {
+                        "$and": [
+                            {'_id': ObjectId(_id)},
+                            {'title': title}
+                        ]
+                    },
+                    {'$push': {
+                        'fav': {
+                            'user_id': user[0]['_id'],
+                            'user_name': user[0]['id']
+                        }
+                    },
+                        '$inc': {'fav_cnt': 1}
                     }
-                },
-                    '$inc': {'fav_cnt': 1}
-                }
-            )
+                )
         db.users.update(
             {'_id': ObjectId(user[0]['_id'])},
             {'$push': {
@@ -316,19 +325,20 @@ class UnFavTimeline(Resource):
         db = db_manager()
         user = auth(db)
         for col in db.collection_names():
-            db[col].update(
-                {
-                    "$and": [
-                        {'_id': ObjectId(_id)},
-                        {'title': title}
-                    ]
-                },
-                {'$pull': {
-                    'fav': {'user_id': user[0]['_id']}
-                },
-                    '$inc': {'fav_cnt': -1}
-                }
-            )
+            if col[0:2]=="PK":
+                db[col].update(
+                    {
+                        "$and": [
+                            {'_id': ObjectId(_id)},
+                            {'title': title}
+                        ]
+                    },
+                    {'$pull': {
+                        'fav': {'user_id': user[0]['_id']}
+                    },
+                        '$inc': {'fav_cnt': -1}
+                    }
+                )
         db.users.update(
             {'_id': ObjectId(user[0]['_id'])},
             {'$pull': {
@@ -435,12 +445,16 @@ class TimelineAdmin(Resource):
 
 class TimelineUpdate(Resource):
     def put(self):
-        parser.add_argument('$oid')
+        parser.add_argument('id')
+        parser.add_argument('title')
         args = parser.parse_args()
-        _id = args['$oid']
+        id = args['id']
+        title = args['title']
         client = MongoClient('mongodb://localhost:27017')
         db = client.pookle
-        db.timeline.remove({'_id': ObjectId(_id)})
+        for col in db.collection_names():
+            if col[0:2]=="PK":
+                db[col].remove({'$and':[{'_id': ObjectId(id)},{'title':title}]})
         return 0
 
 
@@ -462,7 +476,6 @@ class Board(Resource):
         client.close()
         after_data = dumps(before_data)
         return after_data
-
     def post(self):
         args = parser.parse_args()
         contents = args['contents']
@@ -488,7 +501,13 @@ class Board(Resource):
         db.board.insert(post)
         client.close()
         return 0
-
+    def put(self):
+        args = parser.parse_args()
+        id = args['id']
+        contents = args['contents']
+        client = MongoClient('mongodb://localhost:27017')
+        db = client.pookle
+        db.board.update({'_id': ObjectId(id)},{"$set":{"contents":contents}})
     def delete(self):
         args = request.args
         id = args['id']

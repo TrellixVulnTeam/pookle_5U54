@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { UniService } from '../../../uni.Service';
 
 @Component({
@@ -7,17 +7,29 @@ import { UniService } from '../../../uni.Service';
   styleUrls: ['./board-fav.component.css']
 })
 export class BoardFavComponent implements OnInit {
-  @Input() data;
+  data_;
+  is_empty=true;
+  @Input() 
+  set data(value) {
+    if(value && value.length>=1){
+      this.data_ = value;
+      this.is_empty = false;
+    }else{
+      this.data_ = [];
+      this.is_empty = true;
+    }
+  }
+  @Output() refresh:EventEmitter<any> = new EventEmitter();
 
   constructor(private uniService: UniService) { }
 
   ngOnInit() {
   }
   unFav(i:number){
-    let id = {$oid: this.data[i]._id};
+    let id = {$oid: this.data_[i]._id};
     this.uniService.unFavBoard(id).subscribe(
       response => {
-        this.data.splice(i,1);
+        this.refresh.emit('');
       },
       error => console.log('error', error)
     );

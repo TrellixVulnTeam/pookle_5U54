@@ -34,7 +34,7 @@
     font-family: 'Do Hyeon', sans-serif;
     font-size:20px;
 }
-@media (max-width: 576px) {
+@media (max-width: 994px) {
     .container{
         width:100%;
         margin:20px 0px;
@@ -51,8 +51,19 @@
         font-family: 'Do Hyeon', sans-serif;
         font-size:15px;
     }
-    .col-sm-6{
+    .col-lg-6{
         padding:0px;
     }
 }
-
+@media (max-width: 994px) {
+    .change_btn{
+        margin:10px 10px;
+        padding:10px;
+        background-color:#212529;
+        color:#fed136;
+        border:0px;
+        border-radius: 5px;
+        font-family: 'Do Hyeon', sans-serif;
+        font-size:15px;
+    }
+}

@@ -14,7 +14,7 @@
             <form [formGroup]="searchForm" (ngSubmit)="search()">
 
             <input type="text"  formControlName="word" class="searchBar">
-            <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+            <button type="submit" [disabled]="!searchForm.valid" class="search-btn"><i class="fas fa-search"></i></button>
             </form>
         </div>
       </div>

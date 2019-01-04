@@ -6,10 +6,10 @@
     </div>
 
     <div *ngFor="let post of small_posts; index as i" class="post">
-        <h3 class="nickname">{{post.author}}</h3>
+        <h5 class="nickname">{{post.author}}</h5>
         <span class="time">&nbsp;{{post.date}}</span>
         <button class="delete float-right" *ngIf="user && post.author==user.user_nick || isAdmin" (click)="delete_post(i)">X</button>
-        <button class="delete float-right" *ngIf="user && post.author==user.user_nick || isAdmin" (click)="delete_post(i)"><span class="fas fa-pencil-alt"></span></button>
+        <button class="delete float-right" *ngIf="user && post.author==user.user_nick || isAdmin" (click)="update_post(i, update)"><span class="fas fa-pencil-alt"></span></button>
 
         <div class="post-contents">{{post.contents}}</div>
         <div class="comment-div">
@@ -31,7 +31,7 @@
                 </div>
                 <form [formGroup]="comment_writeForm" (ngSubmit)="comment_send(i)">
                     <input class="comment-textarea" formControlName="contents" type="textarea" placeholder="댓글을 입력해주세요.">
-                    <button type="submit"> <span class="fas fa-comment"></span></button>
+                    <button type="submit" [disabled]="!comment_writeForm.valid"> <span class="fas fa-comment"></span></button>
                 </form>
             </div>
         </div>
@@ -52,7 +52,25 @@
     
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-outline-dark">올리기</button>
+    <button type="submit" [disabled]="!writeForm.valid" class="btn btn-outline-dark">올리기</button>
   </div>
 </form>
 </ng-template>
+
+<ng-template #update let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">글 수정하기</h4>
+          <button type="button" class="close" aria-label="Close" (click)="close()">
+              <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form [formGroup]="updateForm" (ngSubmit)="save()">
+        <div class="modal-body">
+            <textarea id="contents" formControlName="contents" class="write-area" ></textarea>
+            <input type="hidden" formControlName="id"> 
+        </div>
+        <div class="modal-footer">
+          <button type="submit"  [disabled]="!updateForm.valid" class="btn btn-outline-dark">저장</button>
+        </div>
+      </form>
+      </ng-template>

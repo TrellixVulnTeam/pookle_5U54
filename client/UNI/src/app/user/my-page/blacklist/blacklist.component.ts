@@ -7,8 +7,18 @@ import { UniService } from '../../../uni.Service';
   styleUrls: ['./blacklist.component.css']
 })
 export class BlacklistComponent implements OnInit {
-
-  @Input() data;
+  data_;
+  is_empty=true;
+  @Input() 
+  set data(value) {
+    if(value && value.length>=1){
+      this.data_ = value;
+      this.is_empty = false;
+    }else{
+      this.data_ = [];
+      this.is_empty = true;
+    }
+  }
   @Output() refresh:EventEmitter<any> = new EventEmitter();
 
   constructor(private uniService: UniService) { }
@@ -17,7 +27,7 @@ export class BlacklistComponent implements OnInit {
   }
 
   removeTag(index){
-    let remove_tag = {'black_tag':this.data[index]};
+    let remove_tag = {'black_tag':this.data_[index]};
     this.uniService.removeBlackTag(remove_tag).subscribe(
       response => {
         this.refresh.emit('');

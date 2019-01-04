@@ -7,7 +7,18 @@ import { UniService } from '../../../uni.Service';
   styleUrls: ['./timeline-fav.component.css']
 })
 export class TimelineFavComponent implements OnInit {
-  @Input() data;
+  data_;
+  is_empty=true;
+  @Input() 
+  set data(value) {
+    if(value && value.length>=1){
+      this.data_ = value;
+      this.is_empty = false;
+    }else{
+      this.data_ = [];
+      this.is_empty = true;
+    }
+  }
   @Output() refresh:EventEmitter<any> = new EventEmitter();
 
   constructor(private uniService: UniService) { }
@@ -17,15 +28,14 @@ export class TimelineFavComponent implements OnInit {
   }
   unFav(i:number){
     let postData = {
-      id:this.data[i]._id,
-      title:this.data[i].title,
-      url:this.data[i].url,
-      date:this.data[i].date
+      id:this.data_[i]._id,
+      title:this.data_[i].title,
+      url:this.data_[i].url,
+      date:this.data_[i].date
     }
-    let id = {$oid: this.data[i]._id};
     this.uniService.unFavTimeline(postData).subscribe(
       response => {
-        this.data.splice(i,1);
+        this.refresh.emit('');
       },
       error => console.log('error', error)
     );

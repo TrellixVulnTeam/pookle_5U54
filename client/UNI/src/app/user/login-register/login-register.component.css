@@ -3,6 +3,7 @@
     width:576px;
     background-color:white;
     height:500px;
+    border-radius: 10px;
   }
   .top-margin{
     margin-top:150px;

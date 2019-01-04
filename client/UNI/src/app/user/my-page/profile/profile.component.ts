@@ -13,10 +13,10 @@ export class ProfileComponent implements OnInit {
   @Output() nickname:EventEmitter<any> = new EventEmitter();
 
   nicknameForm = this.fb.group({
-    nickname:['', Validators.required]
+    nickname:['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])]
   })
   passwdChangeForm = this.fb.group({
-    old_pw:['', Validators.required, Validators.pattern('^[^ \t\r\n\v\f]$')],
+    old_pw:['', Validators.required],
     new_pw:['', Validators.required],
     new_pwc:['', Validators.required],
   })

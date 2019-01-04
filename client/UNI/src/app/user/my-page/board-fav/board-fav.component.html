@@ -2,7 +2,7 @@
   <h2>좋아요 표시한 글 - 게시판</h2>
   <div class="fav-box">
 
-      <div *ngFor="let post of data; index as i;" class="row">
+      <div *ngFor="let post of data_; index as i;" class="row">
         <div class="col-10">
           <strong>{{post.contents}}</strong><br>
           <span class="small-font">{{post.date}}</span>
@@ -11,6 +11,7 @@
             <button class="delete_btn" (click)="unFav(i)"><i class="far fa-times-circle red"></i></button>
         </div>
       </div>
+      <h4 *ngIf="is_empty" style="margin-top:130px;">좋아요를 표시한 글이 없어요!</h4>
 
 </div>
 <button class="more-btn">더 보기..</button>

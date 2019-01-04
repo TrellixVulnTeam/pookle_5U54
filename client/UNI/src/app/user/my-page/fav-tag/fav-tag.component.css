@@ -29,7 +29,7 @@
     color:#999999;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 994px) {
     .container{
         width:100%;
         margin:20px 0px;

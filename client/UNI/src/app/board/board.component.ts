@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { UniService } from '../uni.Service';
 import { HostListener } from '@angular/core';
 
@@ -20,11 +20,15 @@ export class BoardComponent implements OnInit {
   small_posts;
   maxPost=13;
   writeForm = this.fb.group({
-    contents: ['']
+    contents: ['', Validators.required]
   });
   comment_writeForm = this.fb.group({
-    contents: ['']
+    contents: ['',  Validators.required]
   });
+  updateForm = this.fb.group({
+    contents: ['', Validators.required],
+    id:['']
+  })
   constructor(private modalService: NgbModal, private fb: FormBuilder,
     private uniService: UniService) { 
       this.getList();
@@ -52,6 +56,25 @@ export class BoardComponent implements OnInit {
     }, (reason) => {
     });
   }
+  update_post(i,update){
+    this.updateForm.setValue({
+      contents:this.posts[i].contents,
+      id:this.posts[i]._id.$oid
+    });
+    this.modalService.open(update, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      
+    }, (reason) => {
+    });
+  }
+  save(){
+    this.uniService.updatePost(this.updateForm.value).subscribe(
+      response => {
+        this.getList();
+      },
+      error => console.log('error',error)
+    );
+    this.modalService.dismissAll();
+  }
 
   collapsed(ind:number){
     this.isCollapsed[ind] = !this.isCollapsed[ind];
@@ -75,12 +98,16 @@ export class BoardComponent implements OnInit {
   }
 
   comment_send(ind:number){
-    this.uniService.sendComment(this.comment_writeForm.value, this.posts[ind]._id.$oid).subscribe(
-      response => {
-        this.getList();
-      },
-      error => console.log('error',error)
-    );
+    if(this.is_auth){
+      this.uniService.sendComment(this.comment_writeForm.value, this.posts[ind]._id.$oid).subscribe(
+        response => {
+          this.getList();
+        },
+        error => console.log('error',error)
+      );
+    }else{
+      alert("로그인이 필요합니다.");
+    }
   }
   delete_comment(post_ind:number, comment_ind){
     let postData = {

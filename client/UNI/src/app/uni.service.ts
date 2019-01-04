@@ -20,6 +20,7 @@ export class UniService {
   }
   //url = "http://121.145.54.15:5000"
   url = "http://127.0.0.1:5000"
+  //url = "http://13.209.244.127:5000"
 
   registerNewUser(userData): Observable<any>{
     return this.http.post(this.url+'/users', userData)
@@ -104,8 +105,8 @@ export class UniService {
     return this.http.put(this.url+'/user/black-tag',tag); 
     // 삭제. delete메서드를 쓰고싶었으나 delete는 body를 담을 수 없으므로 put으로 대체.
   }
-  removePost(id){
-    return this.http.put(this.url+'/timeline',id); 
+  removePost(postData){
+    return this.http.put(this.url+'/timeline',postData); 
   }
 
 
@@ -121,11 +122,7 @@ export class UniService {
     return this.http.delete(this.url+'/board?id='+id);
   }
   updatePost(postData):Observable<any>{
-    let postData_ = {
-      type:'update',
-      post_id:postData.post_id,
-    }
-    return this.http.put(this.url+'/board', postData_);
+    return this.http.put(this.url+'/board', postData);
   }
   sendComment(postData, post_id):Observable<any>{
     let postData_ = {

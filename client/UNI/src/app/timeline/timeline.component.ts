@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UniService } from '../uni.Service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder,Validators } from '@angular/forms';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -24,6 +24,7 @@ export class TimelineComponent implements OnInit {
   postData;
   maxPost=20;
   user;
+  search_cnt=0;
   isCollapsed = false;
   isCategory = true;
   writeForm = this.fb.group({
@@ -67,7 +68,7 @@ export class TimelineComponent implements OnInit {
   @HostListener('window:scroll', ['$event']) onScrollEvent($event){
     let pageHeight=document.documentElement.offsetHeight
     let windowHeight=window.innerHeight
-    if(window.pageYOffset+windowHeight>=pageHeight){
+    if(window.pageYOffset+windowHeight>=pageHeight-300){
       this.maxPost+=5;
       this.small_posts = this.posts.slice(0,this.maxPost+5);
     }
@@ -185,8 +186,11 @@ export class TimelineComponent implements OnInit {
 
   removePost(ind : number){
     if(this.isAdmin){
-      let id = this.posts[ind]._id;
-      this.uniService.removePost(id).subscribe(
+      let postData={
+        id:this.posts[ind]._id.$oid,
+        title:this.posts[ind].title
+      }
+      this.uniService.removePost(postData).subscribe(
         response => {
           this.getList();
         },
@@ -262,7 +266,7 @@ export class TimelineComponent implements OnInit {
         let len = this.posts.length;
         this.isFavorite= [];
         for(let i=0;i<len;i++){
-          if(this.posts[i].post == 0){
+          if(this.posts[i].post == "0" && this.posts[i].post != ""){
             this.posts[i].post = "[System]해당 사이트 로그인 후에 열람가능합니다.";
           }else if(this.posts[i].post == 1 || this.posts[i].post == ""){
             this.posts[i].post = "[System]링크를 눌러서 확인해보세요!"
@@ -323,8 +327,14 @@ export class TimelineComponent implements OnInit {
       response => {
         this.posts = JSON.parse(response);
         let len = this.posts.length;
+        this.search_cnt = this.posts.length;
         this.isFavorite= [];
         for(let i=0;i<len;i++){
+          if(this.posts[i].post == "0" && this.posts[i].post != ""){
+            this.posts[i].post = "[System]해당 사이트 로그인 후에 열람가능합니다.";
+          }else if(this.posts[i].post == 1 || this.posts[i].post == ""){
+            this.posts[i].post = "[System]링크를 눌러서 확인해보세요!"
+          }
           this.posts[i].date = this.timeConverter(this.posts[i].date);
           this.isFavorite[i]= false;
           if(this.posts[i].fav){

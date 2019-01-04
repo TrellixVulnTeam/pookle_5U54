@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { UniService } from '../../uni.Service';
 @Component({
   selector: 'start-sign-up',
@@ -9,17 +9,18 @@ import { UniService } from '../../uni.Service';
 export class StartSignUpComponent implements OnInit {
   userData;
   signUpForm = this.fb.group({
-    user_id: [''],
-    user_pw: [''],
-    user_pwc: [''],
-    user_que: [''],
-    user_ans: [''],
+    user_id: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
+    user_pw: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
+    user_pwc: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
+    user_que: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
+    user_ans: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
   });
   constructor(private fb: FormBuilder,
     private uniService: UniService,) { 
     }
 
   ngOnInit() {
+    this.signUpForm.reset();
   }
 
   registerNewUser(){

@@ -11,24 +11,24 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-lg-6">
       <profile (nickname) = "nickname($event)" [data]="profile_data"></profile>
     </div>
-    <div class="col-sm-6">
+    <div class="col-lg-6">
       <fav-tag (refresh) = "refresh($event)" [data]="tag_data"></fav-tag>
     </div>
   </div>
   
   <div class="row">
-      <div class="col-sm-6">
+      <div class="col-lg-6">
         <timeline-fav (refresh) = "refresh($event)" [data]="timeline_data"></timeline-fav>
       </div>
-      <div class="col-sm-6">
-        <board-fav [data]="board_data"></board-fav>
+      <div class="col-lg-6">
+        <board-fav (refresh) = "refresh($event)"  [data]="board_data"></board-fav>
       </div>
     </div>
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-lg-6">
       <blacklist (refresh) = "refresh($event)" [data]="black_tag"></blacklist>
     </div>
   </div>

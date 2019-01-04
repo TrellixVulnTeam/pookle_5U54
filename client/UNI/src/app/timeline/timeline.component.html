@@ -58,9 +58,12 @@
             </div>
         </div>
         <p class="search_result_p" *ngIf="search_word">
-                <strong>'{{search_word}}'</strong>로 검색한 결과입니다.
+                <strong>'{{search_word}}'</strong>로 검색한 결과입니다. (총 {{search_cnt}}개)
         </p>
 
+        <div>
+
+        </div>
 
     <div *ngFor="let post of small_posts; index as i" class="post">
         <a *ngIf="post.url"  target="_blank" href="{{post.url}}" class="link-btn" >
@@ -127,7 +130,7 @@
           
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-outline-dark">올리기</button>
+          <button type="submit" [disabled]="!writeForm.valid" class="btn btn-outline-dark">올리기</button>
         </div>
       </form>
       </ng-template>
@@ -149,7 +152,7 @@
             <div class="title_div">만료기간 <input type="date"  formControlName="date"></div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-outline-dark">올리기</button>
+          <button type="submit" [disabled]="!advertiseForm.valid" class="btn btn-outline-dark">올리기</button>
         </div>
       </form>
       </ng-template>

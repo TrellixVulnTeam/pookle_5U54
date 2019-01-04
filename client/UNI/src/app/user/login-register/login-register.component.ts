@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder,Validators } from '@angular/forms';
 import { UniService } from '../../uni.Service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -22,26 +22,26 @@ export class LoginRegisterComponent implements OnInit {
   userData;
   closeResult: string;
   signInForm = this.fb.group({
-    user_id: [''],
-    user_pw: [''],
+    user_id: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')]) ],
+    user_pw: ['', Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
   });
 
   signUpForm = this.fb.group({
-    user_id: [''],
-    user_pw: [''],
-    user_pwc: [''],
-    user_que: [''],
-    user_ans: [''],
+    user_id: ['', Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
+    user_pw: ['', Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
+    user_pwc: ['', Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
+    user_que: ['', Validators.required],
+    user_ans: ['',  Validators.required],
   });
   checkAccountForm = this.fb.group({
-    user_id:['']
+    user_id:['', Validators.required]
   });
   checkQuestionForm = this.fb.group({
-    user_ans:['']
+    user_ans:['', Validators.required]
   });
   resetPasswdForm = this.fb.group({
-    pw:[''],
-    pwc:['']
+    pw:['', Validators.pattern('[^ \t\r\n\v\f]*')],
+    pwc:['', Validators.pattern('[^ \t\r\n\v\f]*')]
   });
 
 
