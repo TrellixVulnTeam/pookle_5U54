@@ -46,15 +46,14 @@
         <div class="col-xl-2"></div>
     <div class="row">
     <div class="col-xl-2"></div>
-
     <div class="main container col-xl-8">
         <div class="admin_post" *ngIf="!search_word">
             <p class="admin_title">{{admin_post.title}}</p>
             <p class="time">{{admin_post.date}}</p>
-            <div class="admin_content ellipsis-all">
+            <div class="admin_content ">
                 {{admin_post.post}}
-                <button *ngIf="!isFull" class="more" (click)='fullPost()'>...더 보기</button>
-                <button *ngIf="isFull" class="more" (click)='fullPost()'>접기</button>
+                <button *ngIf="!isFull && !short_post" class="more" (click)='fullPost()'>...더 보기</button>
+                <button *ngIf="isFull && !short_post" class="more" (click)='fullPost()'>접기</button>
             </div>
         </div>
         <p class="search_result_p" *ngIf="search_word">
@@ -66,7 +65,7 @@
         </div>
 
     <div *ngFor="let post of small_posts; index as i" class="post">
-        <a *ngIf="post.url"  target="_blank" href="{{post.url}}" class="link-btn" >
+        <a *ngIf="post.url"  target="_blank" href="{{post.url}}" (click)="addView(i)" class="link-btn" >
             <div class="block"  *ngIf="post.title">
                 <a  target="_blank" href="{{post.url}}" class="title">{{post.title}}</a>
             </div>
@@ -75,9 +74,9 @@
             <p class="content" *ngIf="post.post || post.contents ">{{post.post}}</p>
             <img *ngIf="post.adv" src="{{post.img}}"/>
         </a>
-        <a *ngIf="!post.url"class="link-btn" >
+        <a *ngIf="!post.url"class="link-btn"  >
                 <div class="block" *ngIf="post.title">
-                    <a href="{{post.url}}"  target="_blank" class="title">{{post.title}}</a>
+                    <a href="{{post.url}}" (click)="addView(i)" target="_blank" class="title">{{post.title}}</a>
                 </div>
     
                 <span class="time" *ngIf="!post.adv">{{post.date}}</span>
@@ -85,8 +84,8 @@
                 <img *ngIf="post.adv" src="{{post.img}}"/>
             </a>
         <a *ngIf="!post.admin&&!post.adv" id="{{i}}" (click)="favorite(i)" class="like-btn-div">
-            <span *ngIf="!isFavorite[i]" class="like-btn">☆</span>
-            <span *ngIf="isFavorite[i]" class="like-btn">★</span>
+            <span *ngIf="!isFavorite[i]" class="heart" style="margin-right:20px;">♡</span>
+            <span *ngIf="isFavorite[i]" class="heart" style="margin-right:20px;">♥</span>
             <span class="like-num">{{post.fav_cnt}}</span></a>
         <a *ngIf="!post.admin&&!post.adv" (click)="copyMessage(post.url)" placement="top"
                 ngbPopover="복사되었습니다." popoverTitle="알림" class="url-copy-btn" ><i class="far fa-copy url-copy-btn"></i></a>

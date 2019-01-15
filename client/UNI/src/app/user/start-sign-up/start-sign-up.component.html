@@ -51,19 +51,19 @@ and open the template in the editor.
                                 <label class="control-label" for="signupPasswordagain">본인 확인 질문</label><br>            
                                 <select class="question" name="question" formControlName="user_que">
                                     <option value="">질문을 선택해주세요</option>
-                                    <option value="나의 학과는?">나의 학과는?</option>
-                                    <option value="나의 어머니 성함은?">나의 어머니 성함은?</option>
-                                    <option value="나의 고향은?">나의 고향은?</option>
-                                    <option value="나의 출신 고등학교는?">나의 출신 고등학교는?</option>
-                                    <option value="나의 아버지 성함은?">나의 아버지 성함은?</option>
-                                    <option value="나의 취미는?">나의 취미는?</option>
-                                    <option value="나의 라임 오렌지나무">나의 라임 오렌지나무</option>
+                                    <option value="1">나의 학과는?</option>
+                                    <option value="2">나의 어머니 성함은?</option>
+                                    <option value="3">나의 고향은?</option>
+                                    <option value="4">나의 취미는?</option>
+                                    <option value="5">나의 첫사랑은?</option>
+                                    <option value="6">나의 아버지 성함은?</option>
+                                    <option value="7">나의 라임오렌지 나무</option>
 
                                 </select>
                                 <input id="signupPassworquestion" type="text" maxlength="25" class="form-control" formControlName="user_ans">
                             </div>
                             <div class="form-group">
-                                <button id="signupSubmit" type="submit" [disabled]="!signUpForm.valid" class="btn btn-info btn-block">계정 생성 하기</button>
+                                <button id="signupSubmit" type="submit" class="btn btn-info btn-block" [disabled]="!signUpForm.valid">계정 생성 하기</button>
                             </div>
                             <p class="form-group font-small">생성된 계정은 2개월 간 접속하지 않을 경우 계정이 삭제됩니다.</p>
                             <hr>

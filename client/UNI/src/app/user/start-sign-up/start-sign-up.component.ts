@@ -12,8 +12,8 @@ export class StartSignUpComponent implements OnInit {
     user_id: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
     user_pw: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
     user_pwc: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
-    user_que: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
-    user_ans: ['',Validators.compose([Validators.required,Validators.pattern('[^ \t\r\n\v\f]*')])],
+    user_que: ['',Validators.required],
+    user_ans: ['',Validators.required],
   });
   constructor(private fb: FormBuilder,
     private uniService: UniService,) { 
@@ -24,6 +24,10 @@ export class StartSignUpComponent implements OnInit {
   }
 
   registerNewUser(){
+    if(!this.signUpForm.valid){
+      alert("모든 정보를 입력해 주세요!");
+      
+    }else{
     this.userData = {
       user_id: this.signUpForm.value.user_id,
       user_pw: this.signUpForm.value.user_pw,
@@ -42,6 +46,7 @@ export class StartSignUpComponent implements OnInit {
       },
       error => console.log('이건 에러야 !!error', error)
     );
+    }
   }
 
 }

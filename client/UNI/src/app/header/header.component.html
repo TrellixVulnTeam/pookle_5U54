@@ -21,7 +21,7 @@
       <div class="row text-center menu-bar">
         <div class="col-md-3"></div>
         <div class="col-sm-12 col-md-6">
-            <a class="menu" routerLink="/timeline"><i class="fas fa-book"></i>&nbsp;타임라인</a>
+            <a class="menu" routerLink="/timeline" (click)="scroll_reset()"><i class="fas fa-book"></i>&nbsp;타임라인</a>
             <a class="menu" routerLink="/board"><i class="fas fa-edit"></i>&nbsp;게시판</a>
             <a *ngIf="!is_auth" class="menu" routerLink="/user/sign-in"><i class="fas fa-user"></i>&nbsp;로그인</a>
             <a *ngIf="is_auth" class="menu" routerLink="/user/my-page"><i class="fas fa-cog"></i>&nbsp;내정보</a>

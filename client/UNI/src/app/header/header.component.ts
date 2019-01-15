@@ -40,6 +40,9 @@ export class HeaderComponent implements OnInit {
       this.animationState='in';
     }
   }
+  scroll_reset(){
+    window.scrollTo(0, 0);
+  }
   
   search(){
     let word = this.searchForm.value.word;

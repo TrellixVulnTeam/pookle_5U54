@@ -20,6 +20,7 @@ export class TimelineComponent implements OnInit {
   is_auth:boolean;
   isAdmin:boolean;
   isFull:boolean = false;
+  short_post:boolean;
   search_word;
   postData;
   maxPost=20;
@@ -220,6 +221,11 @@ export class TimelineComponent implements OnInit {
           this.admin_post = JSON.parse(response);
           this.admin_post.isFull = true;
           this.admin_post.date = this.timeConverter(this.admin_post.date);
+          if(this.admin_post.post.length<50){
+            this.short_post = true;
+          }else{
+            this.short_post = false;
+          }
           if(this.admin_post.post.length>50 && !this.isFull){
             if(this.isCategory){
               this.admin_post.post= this.admin_post.post.slice(0,35);
@@ -266,6 +272,8 @@ export class TimelineComponent implements OnInit {
         let len = this.posts.length;
         this.isFavorite= [];
         for(let i=0;i<len;i++){
+          if(this.posts[i].fin_date)
+            this.posts[i].adv=true;
           if(this.posts[i].post == "0" && this.posts[i].post != ""){
             this.posts[i].post = "[System]해당 사이트 로그인 후에 열람가능합니다.";
           }else if(this.posts[i].post == 1 || this.posts[i].post == ""){
@@ -335,7 +343,7 @@ export class TimelineComponent implements OnInit {
           }else if(this.posts[i].post == 1 || this.posts[i].post == ""){
             this.posts[i].post = "[System]링크를 눌러서 확인해보세요!"
           }
-          this.posts[i].date = this.timeConverter(this.posts[i].date);
+          this.posts[i].after_date = this.timeConverter(this.posts[i].date);
           this.isFavorite[i]= false;
           if(this.posts[i].fav){
             let fav_len = this.posts[i].fav.length;
@@ -353,6 +361,18 @@ export class TimelineComponent implements OnInit {
       error => console.log('error',error)
     );
   
+  }
+  addView(i){
+    let postData = {
+      id: this.posts[i]._id.$oid,
+      title: this.posts[i].title
+    }
+    this.uniService.addView(postData).subscribe(
+      response =>{
+        console.log(this.posts[i].view);
+      },
+      error => console.log('error', error)
+    );
   }
 
 

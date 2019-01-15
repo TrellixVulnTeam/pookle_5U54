@@ -169,3 +169,8 @@
   #mainNav {
     background-color: #212529;
   } 
+  @media (max-width: 360px) {
+    .menu{
+      padding:10px 10px;
+    }
+  }

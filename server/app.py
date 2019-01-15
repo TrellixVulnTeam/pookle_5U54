@@ -12,6 +12,7 @@ from bson.objectid import ObjectId
 from string_search import Search
 import timeline
 import sub_timeline
+import string_filter
 
 application = Flask(__name__)
 CORS(application)
@@ -64,13 +65,12 @@ class UserList(Resource):
     def get(self):
         db = db_manager()
         user = auth(db)
-        if user == None:
-            return None
-        if user[0]['rank'] == 10:
-            collection = db.users
-            users = dumps(collection.find())
-            MongoClient('mongodb://localhost:27017').close()
-            return users
+        if user:
+            if user[0]['rank'] == 10:
+                collection = db.users
+                users = dumps(collection.find())
+                MongoClient('mongodb://localhost:27017').close()
+                return users
 
     def post(self):
         args = parser.parse_args()
@@ -445,8 +445,6 @@ class TimelineAdmin(Resource):
 
 class TimelineUpdate(Resource):
     def put(self):
-        parser.add_argument('id')
-        parser.add_argument('title')
         args = parser.parse_args()
         id = args['id']
         title = args['title']
@@ -455,8 +453,18 @@ class TimelineUpdate(Resource):
         for col in db.collection_names():
             if col[0:2]=="PK":
                 db[col].remove({'$and':[{'_id': ObjectId(id)},{'title':title}]})
+        db.advertise.remove({'$and':[{'_id': ObjectId(id)},{'title':title}]})
         return 0
 
+class AddView(Resource):
+    def put(self):
+        db = db_manager()
+        args = parser.parse_args()
+        id = args['id']
+        title = args['title']
+        for col in db.collection_names():
+            if col[0:2] == "PK":
+                db[col].update({'$and': [{'_id': ObjectId(id)}, {'title': title}]},{"$inc":{"view":1}})
 
 class Board(Resource):
     def get(self):
@@ -479,6 +487,9 @@ class Board(Resource):
     def post(self):
         args = parser.parse_args()
         contents = args['contents']
+        filter = string_filter.string_filter(contents)
+        if filter == False:
+            return 0
         client = MongoClient('mongodb://localhost:27017')
         db = client.pookle
         collection = db.board
@@ -491,16 +502,19 @@ class Board(Resource):
             collection.remove({"_id": ObjectId(recent)})
             count = json.loads(dumps(db.board.aggregate([{"$match": {}}, {"$count": "cnt"}])))[0]['cnt']
         user = auth(db)
+        now = datetime.datetime.now()
+        now_date = now.strftime("%Y-%m-%d %H:%M:%S")
+        print(now_date)
         post = {
             "author": user[0]['_id'],
             "contents": contents,
             "fav_cnt": 0,
             "comment": [],
-            "date": datetime.datetime.now()
+            "date": now_date
         }
         db.board.insert(post)
         client.close()
-        return 0
+        return 1
     def put(self):
         args = parser.parse_args()
         id = args['id']
@@ -514,6 +528,7 @@ class Board(Resource):
         client = MongoClient('mongodb://localhost:27017')
         db = client.pookle
         db.board.remove({'_id': ObjectId(id)})
+
         client.close()
         return 0
 
@@ -526,13 +541,16 @@ class Comment(Resource):
         client = MongoClient('mongodb://localhost:27017')
         db = client.pookle
         user = auth(db)
+        now = datetime.datetime.now()
+        now_date = now.strftime("%Y-%m-%d %H:%M:%S")
         db.board.update(
             {"_id": ObjectId(_id)},
             {"$push": {
                 "comment": {
+                    "oid":ObjectId(),
                     "_id": user[0]['_id'],
                     "contents": contents,
-                    "date": datetime.datetime.now()
+                    "date": now_date
                 }
             }
             }
@@ -552,7 +570,7 @@ class Comment(Resource):
                 {'_id': ObjectId(post_id)},
                 {'$pull': {
                     "comment": {
-                        '_id': ObjectId(comment_id)
+                        'oid': ObjectId(comment_id)
                     }
                 }
                 }
@@ -653,7 +671,7 @@ class Advertise(Resource):
         db = db_manager()
         adv = {
             'title': title,
-            'contents': contents,
+            'post': contents,
             'url': url,
             'img': img,
             'date': now_date,
@@ -681,6 +699,7 @@ api.add_resource(Timeline, '/timeline/<int:option>')
 api.add_resource(FavTimeline, '/timeline/fav')
 api.add_resource(UnFavTimeline, '/timeline/un-fav')
 api.add_resource(Advertise, '/timeline/advertise')
+api.add_resource(AddView, '/timeline/view')
 
 api.add_resource(Board, '/board')
 api.add_resource(Comment, '/board/comment')

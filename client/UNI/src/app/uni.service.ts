@@ -19,8 +19,8 @@ export class UniService {
   ) { 
   }
   //url = "http://121.145.54.15:5000"
-  url = "http://127.0.0.1:5000"
-  //url = "http://13.209.244.127:5000"
+  //url = "http://127.0.0.1:5000"
+  url = "http://13.209.117.30:5000";
 
   registerNewUser(userData): Observable<any>{
     return this.http.post(this.url+'/users', userData)
@@ -108,6 +108,9 @@ export class UniService {
   removePost(postData){
     return this.http.put(this.url+'/timeline',postData); 
   }
+  addView(postData){
+    return this.http.put(this.url+'/timeline/view',postData);
+  }
 
 
   
@@ -117,6 +120,9 @@ export class UniService {
   }
   sendPost(postData):Observable<any>{
     return this.http.post(this.url+'/board',postData);
+  }
+  getBoard(id):Observable<any>{
+    return this.http.get(this.url+'/board?id='+id);
   }
   deletePost(id):Observable<any>{
     return this.http.delete(this.url+'/board?id='+id);

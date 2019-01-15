@@ -24,7 +24,7 @@
 }
 .post{
     min-height:150px;
-    max-height:800px;
+    max-height:10000px;
     padding:15px 15px 5px;
     margin-bottom: 10px;
 
@@ -43,16 +43,6 @@
 .post .post-contents{
     display: inline-block; 
     width: 100%; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    white-space: normal; 
-    line-height: 1.2; 
-    max-height: 6.0rem; 
-    text-align: left; 
-    word-wrap: break-word; 
-    display: -webkit-box; 
-    -webkit-line-clamp: 3; 
-    -webkit-box-orient: vertical;
 }
 .like-div{
     display: inline-block;

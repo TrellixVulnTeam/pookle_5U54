@@ -31,7 +31,10 @@ export class BoardComponent implements OnInit {
   })
   constructor(private modalService: NgbModal, private fb: FormBuilder,
     private uniService: UniService) { 
+      this.isCollapsed = [];
+
       this.getList();
+
     }
 
   ngOnInit() {
@@ -87,14 +90,20 @@ export class BoardComponent implements OnInit {
   }
 
   send(){
-    this.uniService.sendPost(this.writeForm.value).subscribe(
-      response => {
-        this.getList();
-      },
-      error => console.log('error',error)
-    );
-    this.modalService.dismissAll();
-
+    if(this.writeForm.value.contents.length >500){
+      alert("최대 500자까지 작성할 수 있습니다.")
+    }else{
+      this.uniService.sendPost(this.writeForm.value).subscribe(
+        response => {
+          if(!response){
+            alert("비속어를 사용하지 마세요!");
+          }
+          this.getList();
+        },
+        error => console.log('error',error)
+      );
+      this.modalService.dismissAll();
+    }
   }
 
   comment_send(ind:number){
@@ -108,11 +117,13 @@ export class BoardComponent implements OnInit {
     }else{
       alert("로그인이 필요합니다.");
     }
+    this.comment_writeForm.reset();
+
   }
   delete_comment(post_ind:number, comment_ind){
     let postData = {
       post_id:this.posts[post_ind]._id.$oid,
-      comment_id:this.posts[post_ind].comment[comment_ind]._id.$oid
+      comment_id:this.posts[post_ind].comment[comment_ind].oid.$oid
     }
     this.uniService.deleteComment(postData).subscribe(
       response => {
@@ -150,14 +161,23 @@ export class BoardComponent implements OnInit {
             let post_len = this.posts.length;
             let comment_len;
             this.isFavorite= [];
-            this.isCollapsed=[];
+
             for(let i=0;i<post_len;i++){
               comment_len = this.posts[i].comment.length;
-              this.posts[i].date = this.timeConverter(this.posts[i].date.$date);
+              this.posts[i].comment.reverse();
+              this.posts[i].date = this.timeConverter(this.posts[i].date);
               this.isFavorite[i]= false;
-              this.isCollapsed[i] =true;
+              if(this.isCollapsed[i] == null)
+                this.isCollapsed[i] = true;
               for(let j=0;j<comment_len;j++){
-                this.posts[i].comment[j].date = this.timeConverter(this.posts[i].comment[j].date.$date);
+                this.posts[i].comment[j].date = this.timeConverter(this.posts[i].comment[j].date);
+              }
+              this.posts[i].show_comment = this.posts[i].comment.slice(0,8);
+              let show_comment_len = this.posts[i].show_comment.length;
+              if(comment_len> show_comment_len){
+                this.posts[i].more_comment = true;
+              }else{
+                this.posts[i].more_comment = false;
               }
               if(this.posts[i].fav){
                 let fav_len = this.posts[i].fav.length;
@@ -178,6 +198,17 @@ export class BoardComponent implements OnInit {
       error => console.log('이건 에러야 !!error', error)
     );
    
+  }
+  more_comments(i){
+    let show_comment_len = this.posts[i].show_comment.length;
+    let comment_len = this.posts[i].comment.length;
+    this.posts[i].show_comment = this.posts[i].comment.slice(0,show_comment_len+5);
+    show_comment_len = this.posts[i].show_comment.length;
+    if(comment_len<= show_comment_len){
+      this.posts[i].more_comment = false;
+    }else{
+      this.posts[i].more_comment = true;
+    }
   }
 
   favorite(ind : number){
@@ -206,9 +237,18 @@ export class BoardComponent implements OnInit {
     
     
   }
-  timeConverter(UNIX_timestamp){
+  timeConverter(UNIX_timestamp:any){
+    UNIX_timestamp = UNIX_timestamp.replace(/[^0-9]/g,"");
+    let year:number = UNIX_timestamp.substring(0,4);
+    let month:number = UNIX_timestamp.substring(4,6)-1;
+    let day:number = UNIX_timestamp.substring(6,8);
+    let hour:number = UNIX_timestamp.substring(8,10);
+    let min:number = UNIX_timestamp.substring(10,12);
+    let sec:number = UNIX_timestamp.substring(12,14);
+    let date = new Date(year, month, day, hour, min,sec);
+
     let now = Math.round(new Date().getTime());
-    let elapsed_time = (now-UNIX_timestamp)/1000;
+    let elapsed_time = (now-date.getTime())/1000;
     if(elapsed_time>=2592000){
       elapsed_time /= 2592000;
       return Math.floor(elapsed_time)+"개월 전";
